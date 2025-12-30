@@ -1,0 +1,86 @@
+/* ===============================
+   GLOBAL LAYOUT
+================================ */
+.view {
+    padding: 2rem;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  /* ===============================
+     NAVBAR LAYOUT
+  ================================ */
+  .navbar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background: var(--green-dark);
+  }
+  
+  /* LEFT & RIGHT NAV AREAS */
+  .nav-left,
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    z-index: 10;
+  }
+  
+  /* CENTER LOGO */
+  .logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    letter-spacing: 0.3rem;
+    pointer-events: none;
+  }
+  
+  /* SEARCH BAR */
+  #searchInput {
+    padding: 0.5rem 0.7rem;
+    border-radius: 4px;
+    border: none;
+    outline: none;
+  }
+  
+  /* ===============================
+     SHOTS LAYOUT
+  ================================ */
+  .shot-menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .shot-display {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  
+  /* ===============================
+     RESPONSIVE
+  ================================ */
+  @media (max-width: 900px) {
+    .navbar {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  
+    .logo {
+      position: static;
+      transform: none;
+      pointer-events: auto;
+    }
+  
+    .shot-display {
+      grid-template-columns: 1fr;
+    }
+  }
+  

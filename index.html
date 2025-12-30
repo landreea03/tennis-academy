@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="device-width", intial-scale="1.0">
+    <title>Tennis</title>
+    <link rel="stylesheet" href="css/style.css"> 
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+
+    <script defer src="js/data.js"></script> 
+    <script defer src="js/ui.js"></script>
+    <script defer src="js/main.js"></script> 
+</head>
+<body>
+    
+    <header class="navbar">
+        <div class="nav-left">
+            <button class="nav-btn" data-view="shots">Shots</button>
+            <button class="nav-btn" data-view="benefits">Benefits</button>
+            <button class="nav-btn" data-view="story">My story</button>
+        </div>
+
+        <h1 class="logo">TENNIS</h1>
+
+        <div class="nav-right">
+            <input type="text" id="searchInput" placeholder="Search...">
+        </div>
+
+    </header>
+    <main id="app">
+        <section id="shots" class="view hidden">
+            <div class="shot-menu" id="shotMenu"></div>
+            <div class="shot-display" id="shotDisplay"></div>
+       </section>
+        
+       <section id="benefits" class="view hidden"></section>
+        
+       <section id="story" class="view hidden"></section>
+    </main>
+
+</body>
+<footer>
+    <p>Created by Andreea Lila</p>
+</footer>
+</html>

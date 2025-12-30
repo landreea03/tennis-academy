@@ -1,0 +1,24 @@
+:root {
+    --green-dark: #064e3b;
+    --green-main: #16a34a;
+    --green-light: #bbf7d0;
+    --bg-dark: #022c22;
+    --bg-card: #064e3b;
+    --text-main: #ecfdf5;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-main);
+  }
+ 
+
+
+
+  
