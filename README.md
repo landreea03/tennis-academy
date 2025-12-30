@@ -18,7 +18,8 @@ A modern, interactive tennis learning website built with HTML, CSS, and JavaScri
 
 ## Demo
 
-View the live website here:  
+View the live website here:
+https://landreea03.github.io/tennis-academy/
 
 
 ## Project Structure
