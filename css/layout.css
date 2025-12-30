@@ -83,4 +83,32 @@
       grid-template-columns: 1fr;
     }
   }
+/* ===============================
+   WELCOME PAGE
+================================ */
+.home-content {
+    max-width: 1000px;
+    margin: auto;
+    text-align: center;
+  }
   
+  .home-text {
+    font-size: 1.1rem;
+    margin: 20px 0 30px;
+    line-height: 1.6;
+  }
+  
+  .home-images {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .home-images img {
+    width: 100%;
+    max-width: 420px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  }
+    

@@ -3,44 +3,69 @@ const shotsData = [
       id: "forehand",
       name: "Forehand",
       image: "assets/forehand.JPG",
-      description: "A powerful groundstroke hit from the dominant side.",
+      description: "Description: The foundation of tennis - a weapon from the baseline hit on the dominant side.",
       instructions: [
-        "Turn shoulders",
-        "Low to high swing",
-        "Follow through across body"
+        " Ready Position: Knees bent, feet shoulder-width apart, racket in front",
+        " Unit Turn: Rotate shoulders and hips as ball approaches",
+        " Backswing: Take racket back early, racket head above wrist",
+        " Step In: Transfer weight to front foot as you swing",
+        " Contact Point: Meet ball slightly in front of body, waist height",
+        " Follow Through: Finish over opposite shoulder, full extension",
+        " Recovery: Return to ready position immediately"
+
       ]
     },
     {
       id: "backhand",
       name: "Backhand",
       image: "assets/backhand.jpg",
-      description: "A groundstroke hit from the non-dominant side.",
+      description: "Description: A groundstroke hit from the non-dominant side.",
       instructions: [
-        "Early preparation",
-        "Stable grip",
-        "Balanced finish"
+        " Two-Handed Grip: Dominant hand continental, non-dominant hand eastern",
+        " Early Preparation: Turn shoulders as soon as you recognize direction",
+        " Take Racket Back: Lead with racket head, arms extended",
+        " Step Across: Step into the shot with front foot",
+        " Contact Point: Ball aligned with front hip, bent knees",
+        " Drive Through: Extend arms through contact zone",
+        " Finish High: Racket finishes over shoulder, both hands on grip"
+
+
       ]
     },
     {
       id: "serve",
       name: "Serve",
       image: "assets/serve.JPG",
-      description: "The most important shot that starts the point.",
+      description: "Descrption: The most important shot that starts the point.",
       instructions: [
-        "Consistent toss",
-        "Explode upward",
-        "Snap wrist"
+        " Stance: Feet shoulder-width, front foot at 45° angle",
+        " Ball Toss: Toss straight up, 12-18 inches above racket reach",
+        " Trophy Pose: Racket down back, elbow at 90°, knees bent",
+        " Explosion: Push up with legs, rotate shoulders",
+        " Contact: At full extension, pronate wrist for spin",
+        " Follow Through: Racket finishes across body, land inside court",
+        " Recovery: Prepare for return immediately"
+
+
+
+
       ]
     },
     {
       id: "volley",
       name: "Volley",
       image: "assets/voley.JPG",
-      description: "A shot hit before the bounce near the net.",
+      description: "Description: Offensive shot hit before the ball bounces, usually at net.",
       instructions: [
-        "Short swing",
-        "Firm wrist",
-        "Step forward"
+        " Ready Position: Racket up, knees bent, weight forward",
+        " Short Backswing: Punch motion, no big windup",
+        " Step Forward: Meet ball aggressively",
+        " Firm Wrist: Keep wrist locked on impact",
+        " Contact Point: Out in front, slightly to side",
+        " Follow Through: Short, controlled forward motion",
+        " Split Step: Small hop as opponent makes contact"
+
+
       ]
     },
     {
@@ -49,9 +74,15 @@ const shotsData = [
       image: "assets/slice.JPG",
       description: "An underspin shot used for control.",
       instructions: [
-        "Open racket face",
-        "High to low motion",
-        "Soft hands"
+        " Use continental grip for both forehand and backhand slice",
+        " Swing from high to low through the contact zone",
+        " Keep racket face slightly open at contact",
+        " Slice under the ball to generate backspin",
+        " Make contact slightly in front of your body",
+        " Follow through toward your target with extension",
+        " Maintain bent knees to stay low through the shot",
+        " Use a compact backswing for quicker preparation",
+        " Recover quickly to ready position after hitting"
       ]
     }
   ];
