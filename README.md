@@ -1,72 +1,29 @@
-Tennis World – Interactive Web App
+# Tennis World
 
-Tennis World is a modern, interactive web application designed to showcase tennis shots, benefits of playing tennis, and a personal tennis journey. The project focuses on clean UI design, dynamic content rendering with JavaScript, and responsive layouts.
+A modern, interactive tennis learning website built with HTML, CSS, and JavaScript, designed to teach beginners and enthusiasts about tennis shots, benefits, and personal experience through a clean and professional UI.
 
- Features
+## Features
 
-Welcome Page
+- Welcome page with modern image gallery (6 images)
+- Interactive navigation with dynamic view switching
+- Detailed tennis shots section with instructions and images
+- Three-column benefits section:
+  - Physical benefits
+  - Mental benefits
+  - Social & life benefits
+- Personal “My Story” section with text and images
+- Modular JavaScript structure for scalability
+- Responsive design for desktop and mobile
+- Smooth animations and hover effects
 
-Modern gallery layout with 6 images
+## Demo
 
-Responsive, asymmetric grid design
+View the live website here:
+https://landreea03.github.io/tennis-academy/
 
-Smooth hover animations
 
-Shots Section
+## Project Structure
 
-Interactive menu of tennis shots
-
-Dynamic rendering of shot details
-
-Step-by-step instructions with images
-
-Benefits Section
-
-Categorized tennis benefits:
-
-Physical
-
-Mental
-
-Social & Life
-
-Clean card-based layout
-
-My Story Section
-
-Personal tennis story displayed as a single paragraph
-
-Two supporting images presented in a grid layout
-
-Navigation
-
-Smooth view switching without page reloads
-
-JavaScript-driven UI updates
-
- Technologies Used
-
-HTML5
-
-Semantic structure
-
-CSS3
-
-Grid & Flexbox
-
-Animations and transitions
-
-Responsive design
-
-JavaScript (Vanilla JS)
-
-DOM manipulation
-
-Dynamic rendering
-
-Modular structure (main.js, ui.js)
-
-Project Structure
  tennis-world
 ├── index.html
 ├── css/
@@ -77,34 +34,30 @@ Project Structure
 │   ├── main.js
 │   ├── ui.js
 │   └── data.js
-├── images/
-│   ├── welcome1.jpg
-│   ├── welcome2.jpg
-│   ├── welcome3.jpg
-│   ├── welcome4.jpg
-│   ├── welcome5.jpg
-│   └── welcome6.jpg
+├── assets/
+│   
 └── README.md
 
- How to Run the Project
+## How to run locally
+1. Clone the repository:
+git clone https://github.com/landreea03/tennis-world.git
+2. Open `index.html` in your browser  
+3. Navigate using the menu buttons to explore the website
 
-Clone or download the repository
+## Author
 
-Open index.html in your browser
-(No server or build tools required)
+Andreea Lila – Computer Science Student  
 
- Project Goals
-
-Practice JavaScript DOM manipulation
-
-Build a responsive, multi-view UI
-
-Improve UI/UX design skills
-
-Create a portfolio-ready web project
-
-Author
-
-Andreea Lila
-Student & Tennis Athlete
+- GitHub: https://github.com/landreea03
+- Student & Tennis Athlete
 Frontend-focused Web Project
+
+## Skills Demonstrated
+
+- HTML5 & Semantic Markup
+- CSS Grid, Flexbox, Animations
+- JavaScript DOM Manipulation
+- Responsive Web Design
+- Modular Frontend Architecture
+- UI/UX Design
+ 
