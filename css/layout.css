@@ -21,6 +21,7 @@
     background: var(--green-dark);
   }
   
+  
   /* LEFT & RIGHT NAV AREAS */
   .nav-left,
   .nav-right {
@@ -37,7 +38,16 @@
     transform: translateX(-50%);
     margin: 0;
     letter-spacing: 0.3rem;
-    pointer-events: none;
+  
+    cursor: pointer;
+    z-index: 20;
+    pointer-events: auto;
+    transition: color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .logo:hover {
+    color: var(--green-light);
+    transform: translateX(-50%) scale(1.05);
   }
   
   /* SEARCH BAR */

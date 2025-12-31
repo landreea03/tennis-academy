@@ -93,7 +93,7 @@ function renderStory() {
     </p>
 
     <div class="story-images">
-      <img src="${aboutContent.images[0]}" alt="My tennis journey">
+      <img src="${aboutContent.images[0]}" loading="lazy" alt="My tennis journey">
       <img src="${aboutContent.images[1]}" alt="Training and competition">
     </div>
   `;

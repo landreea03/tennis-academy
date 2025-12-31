@@ -16,6 +16,20 @@
   .nav-btn:hover {
     color: var(--green-light);
   }
+  /* ===============================
+   LOGO
+================================ */
+.logo {
+  position: relative;
+  z-index:999;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.logo:hover {
+  color: var(--green-light);
+  transform: scale(1.05);
+}
   
   /* ===============================
      SHOT BUTTONS
@@ -195,6 +209,32 @@
       grid-template-columns: 1fr;
     }
   }
+  .home-content {
+    animation: homeFade 0.8s ease forwards;
+  }
+  
+  @keyframes homeFade {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .view {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+  
+  .view:not(.hidden) {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  
   
   
   
