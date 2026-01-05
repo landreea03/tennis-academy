@@ -33,18 +33,47 @@ function renderShotMenu() {
 function renderShotDetails(shot) {
   shotDisplay.innerHTML = `
     <div class="card">
-      <img src="${shot.image}" alt="${shot.name}">
+      <img src="${shot.image}" alt="${shot.name}" loading="lazy">
     </div>
 
     <div class="card">
       <h2>${shot.name}</h2>
+
+      <p><strong>Difficulty:</strong> ${shot.difficulty}</p>
       <p>${shot.description}</p>
+
+      <h3>When to Use</h3>
       <ul>
-        ${shot.instructions.map(i => `<li>${i}</li>`).join("")}
+        ${shot.usedWhen.map(item => `<li>${item}</li>`).join("")}
       </ul>
+
+      <h3>Technique Steps</h3>
+      <ul>
+        ${shot.instructions.map(step => `<li>${step}</li>`).join("")}
+      </ul>
+
+      <h3>Common Mistakes</h3>
+      <ul>
+        ${shot.commonMistakes.map(mistake => `<li>${mistake}</li>`).join("")}
+      </ul>
+
+      <h3>Coaching Tips</h3>
+      <ul>
+        ${shot.coachingTips.map(tip => `<li>${tip}</li>`).join("")}
+      </ul>
+
+      <h3>Drills</h3>
+      <ul>
+        ${shot.drills.map(drill => `<li>${drill}</li>`).join("")}
+      </ul>
+
+      <p class="pro-tip">
+        <strong>Pro Tip:</strong> ${shot.proTip}
+      </p>
     </div>
   `;
 }
+
 
 /* ===============================
    BENEFITS

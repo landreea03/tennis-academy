@@ -1,97 +1,211 @@
 const shotsData = [
-    {
-      id: "forehand",
-      name: "Forehand",
-      image: "assets/forehand.JPG",
-      description: "Description: The foundation of tennis - a weapon from the baseline hit on the dominant side.",
-      instructions: [
-        " Ready Position: Knees bent, feet shoulder-width apart, racket in front",
-        " Unit Turn: Rotate shoulders and hips as ball approaches",
-        " Backswing: Take racket back early, racket head above wrist",
-        " Step In: Transfer weight to front foot as you swing",
-        " Contact Point: Meet ball slightly in front of body, waist height",
-        " Follow Through: Finish over opposite shoulder, full extension",
-        " Recovery: Return to ready position immediately"
+  {
+    id: "forehand",
+    name: "Forehand",
+    image: "assets/forehand.JPG",
+    difficulty: "Beginner → Advanced",
+    description:
+      "The foundation of tennis — a powerful baseline weapon hit on the dominant side.",
+    usedWhen: [
+      "Baseline rallies",
+      "Attacking short balls",
+      "Passing shots"
+    ],
+    instructions: [
+      "Ready Position: Knees bent, feet shoulder-width apart, racket in front",
+      "Unit Turn: Rotate shoulders and hips as ball approaches",
+      "Backswing: Take racket back early, racket head above wrist",
+      "Step In: Transfer weight to front foot as you swing",
+      "Contact Point: Meet ball slightly in front of body, waist height",
+      "Follow Through: Finish over opposite shoulder, full extension",
+      "Recovery: Return to ready position immediately"
+    ],
+    commonMistakes: [
+      "Late preparation",
+      "Hitting too close to the body",
+      "Over-rotating shoulders",
+      "Stopping the follow-through"
+    ],
+    coachingTips: [
+      "Think low-to-high for topspin",
+      "Watch the ball until contact",
+      "Relax your grip for better control"
+    ],
+    drills: [
+      "Cross-court forehand rally",
+      "Inside-out forehand drill",
+      "Forehand consistency drill (20 balls)"
+    ],
+    proTip:
+      "Most professional points are built around a strong forehand — consistency matters more than power."
+  },
 
-      ]
-    },
-    {
-      id: "backhand",
-      name: "Backhand",
-      image: "assets/backhand.jpg",
-      description: "Description: A groundstroke hit from the non-dominant side.",
-      instructions: [
-        " Two-Handed Grip: Dominant hand continental, non-dominant hand eastern",
-        " Early Preparation: Turn shoulders as soon as you recognize direction",
-        " Take Racket Back: Lead with racket head, arms extended",
-        " Step Across: Step into the shot with front foot",
-        " Contact Point: Ball aligned with front hip, bent knees",
-        " Drive Through: Extend arms through contact zone",
-        " Finish High: Racket finishes over shoulder, both hands on grip"
+  {
+    id: "backhand",
+    name: "Backhand",
+    image: "assets/backhand.jpg",
+    difficulty: "Intermediate",
+    description:
+      "A groundstroke hit from the non-dominant side, essential for rally stability.",
+    usedWhen: [
+      "Defensive rallies",
+      "Cross-court exchanges",
+      "Changing direction"
+    ],
+    instructions: [
+      "Two-Handed Grip: Dominant hand continental, non-dominant hand eastern",
+      "Early Preparation: Turn shoulders immediately",
+      "Take Racket Back: Lead with racket head",
+      "Step Across: Step into the shot with front foot",
+      "Contact Point: Ball aligned with front hip",
+      "Drive Through: Extend arms through contact zone",
+      "Finish High: Racket finishes over shoulder"
+    ],
+    commonMistakes: [
+      "Late contact",
+      "Arms too close to body",
+      "Poor footwork"
+    ],
+    coachingTips: [
+      "Let the non-dominant hand do most of the work",
+      "Stay low with knees",
+      "Rotate shoulders, not just arms"
+    ],
+    drills: [
+      "Cross-court backhand rally",
+      "Backhand consistency drill",
+      "Backhand down-the-line drill"
+    ],
+    proTip:
+      "A reliable backhand wins matches by forcing errors, not by hitting winners."
+  },
 
+  {
+    id: "serve",
+    name: "Serve",
+    image: "assets/serve.JPG",
+    difficulty: "Advanced",
+    description:
+      "The most important shot in tennis — it starts every point.",
+    usedWhen: [
+      "Start of every point",
+      "Applying pressure",
+      "Gaining free points"
+    ],
+    instructions: [
+      "Stance: Feet shoulder-width, front foot at 45° angle",
+      "Ball Toss: Consistent, slightly in front",
+      "Trophy Pose: Elbow bent, knees loaded",
+      "Explosion: Push up with legs",
+      "Contact: Full extension, wrist pronation",
+      "Follow Through: Land inside the court",
+      "Recovery: Prepare for return"
+    ],
+    commonMistakes: [
+      "Inconsistent toss",
+      "No leg drive",
+      "Rushing the motion"
+    ],
+    coachingTips: [
+      "Serve rhythm is more important than speed",
+      "Use legs for power, not arm",
+      "Aim high over the net"
+    ],
+    drills: [
+      "Toss consistency drill",
+      "Target serving drill",
+      "Second serve spin drill"
+    ],
+    proTip:
+      "A great serve is built on repetition, not strength."
+  },
 
-      ]
-    },
-    {
-      id: "serve",
-      name: "Serve",
-      image: "assets/serve.JPG",
-      description: "Descrption: The most important shot that starts the point.",
-      instructions: [
-        " Stance: Feet shoulder-width, front foot at 45° angle",
-        " Ball Toss: Toss straight up, 12-18 inches above racket reach",
-        " Trophy Pose: Racket down back, elbow at 90°, knees bent",
-        " Explosion: Push up with legs, rotate shoulders",
-        " Contact: At full extension, pronate wrist for spin",
-        " Follow Through: Racket finishes across body, land inside court",
-        " Recovery: Prepare for return immediately"
+  {
+    id: "volley",
+    name: "Volley",
+    image: "assets/voley.JPG",
+    difficulty: "Intermediate",
+    description:
+      "An offensive shot hit before the ball bounces, usually at the net.",
+    usedWhen: [
+      "Net approaches",
+      "Doubles play",
+      "Finishing points"
+    ],
+    instructions: [
+      "Ready Position: Racket up, knees bent",
+      "Short Backswing: Punch motion",
+      "Step Forward: Weight transfer",
+      "Firm Wrist: No flipping",
+      "Contact Point: In front of body",
+      "Follow Through: Short and controlled",
+      "Split Step: React to opponent"
+    ],
+    commonMistakes: [
+      "Swinging too much",
+      "Dropping the racket head",
+      "Poor footwork"
+    ],
+    coachingTips: [
+      "Think punch, not swing",
+      "Keep racket head above wrist",
+      "Move through the volley"
+    ],
+    drills: [
+      "Rapid volley drill",
+      "Approach + volley drill",
+      "Reflex volley drill"
+    ],
+    proTip:
+      "Great volleys are about positioning, not power."
+  },
 
-
-
-
-      ]
-    },
-    {
-      id: "volley",
-      name: "Volley",
-      image: "assets/voley.JPG",
-      description: "Description: Offensive shot hit before the ball bounces, usually at net.",
-      instructions: [
-        " Ready Position: Racket up, knees bent, weight forward",
-        " Short Backswing: Punch motion, no big windup",
-        " Step Forward: Meet ball aggressively",
-        " Firm Wrist: Keep wrist locked on impact",
-        " Contact Point: Out in front, slightly to side",
-        " Follow Through: Short, controlled forward motion",
-        " Split Step: Small hop as opponent makes contact"
-
-
-      ]
-    },
-    {
-      id: "slice",
-      name: "Slice",
-      image: "assets/slice.JPG",
-      description: "An underspin shot used for control.",
-      instructions: [
-        " Use continental grip for both forehand and backhand slice",
-        " Swing from high to low through the contact zone",
-        " Keep racket face slightly open at contact",
-        " Slice under the ball to generate backspin",
-        " Make contact slightly in front of your body",
-        " Follow through toward your target with extension",
-        " Maintain bent knees to stay low through the shot",
-        " Use a compact backswing for quicker preparation",
-        " Recover quickly to ready position after hitting"
-      ]
-    }
-  ];
-  
+  {
+    id: "slice",
+    name: "Slice",
+    image: "assets/slice.JPG",
+    difficulty: "Intermediate → Advanced",
+    description:
+      "An underspin shot used for control, defense, and variation.",
+    usedWhen: [
+      "Defensive situations",
+      "Low bouncing shots",
+      "Changing rhythm"
+    ],
+    instructions: [
+      "Continental grip",
+      "High-to-low swing path",
+      "Open racket face",
+      "Contact in front",
+      "Extend toward target",
+      "Stay low with knees",
+      "Quick recovery"
+    ],
+    commonMistakes: [
+      "Chopping down too steeply",
+      "Late contact",
+      "Too much wrist movement"
+    ],
+    coachingTips: [
+      "Glide under the ball smoothly",
+      "Use slice to stay in points",
+      "Keep the ball low"
+    ],
+    drills: [
+      "Defensive slice rally",
+      "Slice approach drill",
+      "Backhand slice consistency drill"
+    ],
+    proTip:
+      "Slice is a tactical weapon — use it to disrupt rhythm."
+  }
+];
   const benefitsData = {
     physical: [
       {
         title: "Full-body workout",
         desc: "Engages legs, core, arms, and shoulders simultaneously"
+        
       },
       {
         title: "Cardiovascular health",
