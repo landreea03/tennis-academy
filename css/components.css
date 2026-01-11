@@ -393,6 +393,162 @@
   background: var(--green-light);
   color: #022c22;
 }
+/* ===============================
+   SHOT FILTERS
+================================ */
+.shot-filters {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.filter-btn {
+  padding: 0.4rem 0.9rem;
+  border-radius: 20px;
+  border: 1px solid var(--green-light);
+  background: transparent;
+  color: var(--green-light);
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  background: var(--green-light);
+  color: #022c22;
+}
+
+.filter-btn.active {
+  background: var(--green-light);
+  color: #022c22;
+}
+/* ===============================
+   HOME ADVANCED
+================================ */
+.home-hero {
+  margin-top: 2rem;
+}
+
+.home-subtitle {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+.home-actions {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.home-btn {
+  padding: 0.8rem 1.6rem;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.home-btn.primary {
+  background: var(--green-main);
+  color: white;
+}
+
+.home-btn.secondary {
+  background: transparent;
+  border: 1px solid var(--green-light);
+  color: var(--green-light);
+}
+
+.home-features {
+  margin-top: 4rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.feature-card {
+  padding: 1.5rem;
+  border-radius: 14px;
+  background: var(--bg-card);
+  text-align: center;
+  font-weight: bold;
+}
+
+.home-paths {
+  margin-top: 4rem;
+  text-align: center;
+}
+
+.paths-grid {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.path-card {
+  padding: 2rem;
+  border-radius: 16px;
+  background: var(--bg-card);
+  font-size: 1.2rem;
+}
+
+.home-progress {
+  margin-top: 4rem;
+}
+/* ===============================
+   HOME HERO SPLIT LAYOUT
+================================ */
+.home-hero {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  margin-top: 3rem;
+}
+
+/* Center text column */
+.home-hero-center {
+  text-align: center;
+}
+
+/* Left & right image columns */
+.home-hero-images {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.home-hero-images img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 14px;
+  transition: transform 0.3s ease;
+}
+
+.home-hero-images img:hover {
+  transform: scale(1.04);
+}
+
+/* Make hero fit screen nicely */
+.home-content {
+  margin-top: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .home-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .home-hero-images {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+  }
+}
+
 
     
   

@@ -1,6 +1,16 @@
 console.log("main.js loaded");
 
 /* ===============================
+   SHOT FILTER STATE
+================================ */
+let currentShotFilter = "all"; // "all" | "favorites" | "learned"
+
+function setShotFilter(filter) {
+  currentShotFilter = filter;
+  renderShotMenu();
+}
+
+/* ===============================
    FAVORITES SYSTEM
 ================================ */
 const FAV_KEY = "tennis_favorites";
@@ -19,10 +29,8 @@ let favoritesState = loadFavorites();
 function toggleFavorite(shotId) {
   favoritesState[shotId] = !favoritesState[shotId];
   saveFavorites(favoritesState);
-
   renderShotMenu();
 }
-
 
 /* ===============================
    PROGRESS TRACKING
@@ -43,11 +51,8 @@ let progressState = loadProgress();
 function toggleLearned(shotId) {
   progressState[shotId] = !progressState[shotId];
   saveProgress(progressState);
-
-  // Refresh UI
   renderShotMenu();
 }
-
 
 /* ===============================
    NAV BUTTONS
@@ -70,6 +75,10 @@ document.querySelectorAll(".nav-btn").forEach(btn => {
       renderStory();
     }
 
+    if (view === "home") {
+      renderHome();
+    }
+
     setActiveNav(btn);
   });
 });
@@ -82,6 +91,7 @@ const homeLogo = document.getElementById("homeLogo");
 if (homeLogo) {
   homeLogo.addEventListener("click", () => {
     showView("home");
+    renderHome();
     clearActiveNav();
   });
 } else {
@@ -108,6 +118,11 @@ function clearActiveNav() {
    DEFAULT VIEW
 ================================ */
 showView("home");
+renderHome();
+
+/* ===============================
+   LIGHTBOX FOR IMAGES
+================================ */
 document.addEventListener("click", e => {
   if (e.target.tagName === "IMG") {
     openLightbox(e.target.src);
@@ -122,6 +137,9 @@ function openLightbox(src) {
   document.body.appendChild(overlay);
 }
 
+/* ===============================
+   SEARCH
+================================ */
 const searchInput = document.getElementById("searchInput");
 const searchResults = document.getElementById("searchResults");
 
@@ -133,8 +151,11 @@ const searchIndex = [];
 // Home
 searchIndex.push({
   label: "Tennis (Home)",
-  view: "home",
-  action: () => showView("home")
+  category: "Home",
+  action: () => {
+    showView("home");
+    renderHome();
+  }
 });
 
 // Shots
@@ -224,6 +245,17 @@ function clearSearch() {
   searchResults.classList.add("hidden");
 }
 
+/* ===============================
+   HOME BUTTONS
+================================ */
+document.addEventListener("click", e => {
+  if (e.target.id === "startTrainingBtn") {
+    showView("shots");
+    renderShotMenu();
+  }
 
-
-
+  if (e.target.id === "viewProgressBtn") {
+    showView("shots");
+    setShotFilter("learned");
+  }
+});

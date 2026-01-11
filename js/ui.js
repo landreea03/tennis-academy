@@ -21,7 +21,37 @@ function renderShotMenu() {
   shotMenu.innerHTML = "";
   shotDisplay.innerHTML = "";
 
-  shotsData.forEach(shot => {
+  // --- FILTER BUTTONS ---
+  const filterBar = document.createElement("div");
+  filterBar.className = "shot-filters";
+
+  filterBar.innerHTML = `
+    <button class="filter-btn ${currentShotFilter === "all" ? "active" : ""}">All</button>
+    <button class="filter-btn ${currentShotFilter === "favorites" ? "active" : ""}">⭐ Favorites</button>
+    <button class="filter-btn ${currentShotFilter === "learned" ? "active" : ""}">✅ Learned</button>
+  `;
+
+  const [allBtn, favBtn, learnedBtn] = filterBar.querySelectorAll("button");
+
+  allBtn.addEventListener("click", () => setShotFilter("all"));
+  favBtn.addEventListener("click", () => setShotFilter("favorites"));
+  learnedBtn.addEventListener("click", () => setShotFilter("learned"));
+
+  shotMenu.appendChild(filterBar);
+
+  // --- FILTER LOGIC ---
+  let visibleShots = shotsData;
+
+  if (currentShotFilter === "favorites") {
+    visibleShots = shotsData.filter(s => favoritesState[s.id]);
+  }
+
+  if (currentShotFilter === "learned") {
+    visibleShots = shotsData.filter(s => progressState[s.id]);
+  }
+
+  // --- RENDER SHOTS ---
+  visibleShots.forEach(shot => {
     const btn = document.createElement("button");
     btn.className = "shot-btn";
 
@@ -227,3 +257,24 @@ function renderStory() {
     </div>
   `;
 }
+
+/* ===============================
+   HOME PAGE LOGIC
+================================ */
+function renderHome() {
+  const box = document.getElementById("homeProgressBox");
+  if (!box) return;
+
+  const learned = shotsData.filter(s => progressState[s.id]).length;
+  const total = shotsData.length;
+  const percent = Math.round((learned / total) * 100);
+
+  box.innerHTML = `
+    <div class="card">
+      <h2>Your Progress</h2>
+      <p>You have learned <strong>${learned}</strong> out of <strong>${total}</strong> shots.</p>
+      <p>Progress: <strong>${percent}%</strong></p>
+    </div>
+  `;
+}
+

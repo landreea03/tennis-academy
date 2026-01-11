@@ -1,79 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="device-width", intial-scale="1.0">
-    <title>Tennis</title>
-    <link rel="stylesheet" href="css/style.css?v=10"> 
-    <link rel="stylesheet" href="css/components.css?v=10">
-    <link rel="stylesheet" href="css/layout.css?v=10">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tennis Academy</title>
 
-    <script defer src="js/data.js?v=10"></script> 
-    <script defer src="js/ui.js?v=10"></script>
-    <script defer src="js/main.js?v=10"></script> 
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css?v=12">
+  <link rel="stylesheet" href="css/components.css?v=12">
+  <link rel="stylesheet" href="css/layout.css?v=12">
+
+  <!-- Scripts -->
+  <script defer src="js/data.js?v=12"></script>
+  <script defer src="js/ui.js?v=12"></script>
+  <script defer src="js/main.js?v=12"></script>
 </head>
 <body>
-    
-    <header class="navbar">
-        <div class="nav-left">
-            <button class="nav-btn" data-view="shots">Shots</button>
-            <button class="nav-btn" data-view="benefits">Benefits</button>
-            <button class="nav-btn" data-view="story">My story</button>
+
+  <!-- ===============================
+       NAVBAR
+  ================================ -->
+  <header class="navbar">
+    <div class="nav-left">
+      <button class="nav-btn" data-view="shots">Shots</button>
+      <button class="nav-btn" data-view="benefits">Benefits</button>
+      <button class="nav-btn" data-view="story">My Story</button>
+    </div>
+
+    <h1 class="logo" id="homeLogo">TENNIS</h1>
+
+    <div class="nav-right">
+      <div class="search-wrapper">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search..."
+          autocomplete="off"
+        >
+        <div id="searchResults" class="search-results hidden"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===============================
+       APP
+  ================================ -->
+  <main id="app">
+
+    <!-- ===============================
+         HOME
+    ================================ -->
+    <section id="home" class="view">
+      <div class="home-content">
+
+        <!-- HERO -->
+        <div class="home-hero">
+
+          <!-- LEFT IMAGES -->
+          <div class="home-hero-images">
+            <img src="assets/tenniscourt.png" alt="Tennis court">
+            <img src="assets/tennis1.JPG" alt="Training">
+            <img src="assets/welcome.jpg" alt="Tennis action">
+          </div>
+
+          <!-- CENTER CONTENT -->
+          <div class="home-hero-center">
+            <h1 class="home-title">Tennis Academy</h1>
+            <p class="home-subtitle">
+              Learn tennis the smart way — structured lessons, progress tracking, and professional guidance.
+            </p>
+
+            <div class="home-actions">
+              <button class="home-btn primary" id="startTrainingBtn">Start Training</button>
+              <button class="home-btn secondary" id="viewProgressBtn">View My Progress</button>
+            </div>
+          </div>
+
+          <!-- RIGHT IMAGES -->
+          <div class="home-hero-images">
+            <img src="assets/download.jpeg" alt="Match">
+            <img src="assets/welcome1.jpg" alt="Practice">
+            <img src="assets/welcome2.webp" alt="Game">
+          </div>
+
         </div>
 
-        <h1 class="logo" id="homeLogo">TENNIS</h1>
+        <!-- FEATURES -->
+        <div class="home-features">
+          <div class="feature-card">📘 Structured Shot Lessons</div>
+          <div class="feature-card">✅ Progress Tracking</div>
+          <div class="feature-card">⭐ Favorites System</div>
+          <div class="feature-card">🔍 Smart Search</div>
+        </div>
 
-        <div class="nav-right">
-          <div class="search-wrapper">
-            <input
-              type="text"
-              id="searchInput"
-              placeholder="Search..."
-              autocomplete="off"
-            >
-            <div id="searchResults" class="search-results hidden"></div>
+        <!-- LEARNING PATHS -->
+        <div class="home-paths">
+          <h2>Choose Your Path</h2>
+          <div class="paths-grid">
+            <div class="path-card">Beginner</div>
+            <div class="path-card">Intermediate</div>
+            <div class="path-card">Advanced</div>
           </div>
         </div>
+
+        <!-- PROGRESS PREVIEW -->
+        <div class="home-progress" id="homeProgressBox">
+          <!-- Filled by JS -->
+        </div>
+
         
 
-    </header>
-    <main id="app">
-        <section id="home" class="view">
-            <div class="home-content">
-                <h1 class="home-title">Welcome to Tennis World</h1>
-          
-              <p class="home-text">
-                Discover the beauty of tennis — from learning essential shots to
-                understanding its physical, mental, and social benefits. This page
-                reflects my journey and passion for the sport.
-              </p>
-              <p class="home-hint">
-                👆 Use the menu above to start exploring
-              </p>
-          
-              <div class="home-gallery">
-                <img src="assets/tenniscourt.png" alt="Playing tennis">
-                <img src="assets/tennis1.JPG" alt="Tennis training">
-                <img src="assets/download.jpeg">
-                <img src="assets/welcome.jpg">
-                <img src="assets/welcome1.jpg">
-                <img src="assets/welcome2.webp">
-              </div>
-            </div>
-          </section>
-          
-        <section id="shots" class="view hidden">
-            <div class="shot-menu" id="shotMenu"></div>
-            <div class="shot-display" id="shotDisplay"></div>
-       </section>
-        
-       <section id="benefits" class="view hidden"></section>
-        
-       <section id="story" class="view hidden"></section>
-    </main>
+      </div>
+    </section>
+
+    <!-- ===============================
+         SHOTS
+    ================================ -->
+    <section id="shots" class="view hidden">
+      <div class="shot-menu" id="shotMenu"></div>
+      <div class="shot-display" id="shotDisplay"></div>
+    </section>
+
+    <!-- ===============================
+         BENEFITS
+    ================================ -->
+    <section id="benefits" class="view hidden"></section>
+
+    <!-- ===============================
+         STORY
+    ================================ -->
+    <section id="story" class="view hidden"></section>
+
+  </main>
+
+  <!-- ===============================
+       FOOTER
+  ================================ -->
+  <footer>
+    <p>Created by Andreea Lila</p>
+  </footer>
 
 </body>
-<footer>
-    <p>Created by Andreea Lila</p>
-</footer>
 </html>
