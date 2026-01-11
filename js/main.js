@@ -1,6 +1,30 @@
 console.log("main.js loaded");
 
 /* ===============================
+   FAVORITES SYSTEM
+================================ */
+const FAV_KEY = "tennis_favorites";
+
+function loadFavorites() {
+  const saved = localStorage.getItem(FAV_KEY);
+  return saved ? JSON.parse(saved) : {};
+}
+
+function saveFavorites(favs) {
+  localStorage.setItem(FAV_KEY, JSON.stringify(favs));
+}
+
+let favoritesState = loadFavorites();
+
+function toggleFavorite(shotId) {
+  favoritesState[shotId] = !favoritesState[shotId];
+  saveFavorites(favoritesState);
+
+  renderShotMenu();
+}
+
+
+/* ===============================
    PROGRESS TRACKING
 ================================ */
 const STORAGE_KEY = "tennis_progress";

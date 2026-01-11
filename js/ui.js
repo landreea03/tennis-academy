@@ -26,10 +26,12 @@ function renderShotMenu() {
     btn.className = "shot-btn";
 
     const learned = progressState[shot.id];
+    const favorite = favoritesState[shot.id];
 
     btn.innerHTML = `
       ${shot.name}
       ${learned ? " ✔" : ""}
+      ${favorite ? " ⭐" : ""}
     `;
 
     btn.addEventListener("click", () => renderShotDetails(shot));
@@ -38,6 +40,7 @@ function renderShotMenu() {
 
   renderProgressSummary();
 }
+
 
 function renderProgressSummary() {
   const learnedCount = shotsData.filter(s => progressState[s.id]).length;
@@ -55,6 +58,7 @@ function renderProgressSummary() {
 
 function renderShotDetails(shot) {
   const isLearned = progressState[shot.id];
+  const isFavorite = favoritesState[shot.id];
 
   shotDisplay.innerHTML = `
     <div class="card">
@@ -64,9 +68,15 @@ function renderShotDetails(shot) {
     <div class="card">
       <h2>${shot.name}</h2>
 
-      <button class="learn-btn">
-        ${isLearned ? "✅ Marked as Learned" : "📘 Mark as Learned"}
-      </button>
+      <div>
+        <button class="learn-btn">
+          ${isLearned ? "✅ Marked as Learned" : "📘 Mark as Learned"}
+        </button>
+
+        <button class="fav-btn">
+          ${isFavorite ? "⭐ Favorited" : "☆ Add to Favorites"}
+        </button>
+      </div>
 
       <p><strong>Difficulty:</strong> ${shot.difficulty}</p>
       <p>${shot.description}</p>
@@ -86,7 +96,14 @@ function renderShotDetails(shot) {
   const learnBtn = shotDisplay.querySelector(".learn-btn");
   learnBtn.addEventListener("click", () => {
     toggleLearned(shot.id);
-    renderShotDetails(shot); // re-render to update button text
+    renderShotDetails(shot);
+  });
+
+  // FAVORITE BUTTON LOGIC
+  const favBtn = shotDisplay.querySelector(".fav-btn");
+  favBtn.addEventListener("click", () => {
+    toggleFavorite(shot.id);
+    renderShotDetails(shot);
   });
 
   // Tabs logic

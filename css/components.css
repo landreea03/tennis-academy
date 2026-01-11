@@ -374,6 +374,25 @@
   font-size: 0.9rem;
   opacity: 0.9;
 }
+/* ===============================
+   FAVORITES
+================================ */
+.fav-btn {
+  margin-left: 1rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  color: var(--green-light);
+  border: 1px solid var(--green-light);
+  transition: all 0.2s ease;
+}
+
+.fav-btn:hover {
+  background: var(--green-light);
+  color: #022c22;
+}
 
     
   
