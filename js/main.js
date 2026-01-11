@@ -1,6 +1,31 @@
 console.log("main.js loaded");
 
 /* ===============================
+   PROGRESS TRACKING
+================================ */
+const STORAGE_KEY = "tennis_progress";
+
+function loadProgress() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  return saved ? JSON.parse(saved) : {};
+}
+
+function saveProgress(progress) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+}
+
+let progressState = loadProgress();
+
+function toggleLearned(shotId) {
+  progressState[shotId] = !progressState[shotId];
+  saveProgress(progressState);
+
+  // Refresh UI
+  renderShotMenu();
+}
+
+
+/* ===============================
    NAV BUTTONS
 ================================ */
 document.querySelectorAll(".nav-btn").forEach(btn => {

@@ -317,7 +317,64 @@
 .hidden {
   display: none;
 }
+/* ===============================
+   SHOT TABS
+================================ */
+.shot-tabs {
+  display: flex;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.shot-tab {
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  opacity: 0.7;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.shot-tab:hover {
+  opacity: 1;
+}
+
+.shot-tab.active {
+  opacity: 1;
+  border-bottom: 2px solid var(--green-light);
+  color: var(--green-light);
+}
+
+.tab-content {
+  animation: fadeIn 0.3s ease;
+}
   
+/* ===============================
+   PROGRESS SYSTEM
+================================ */
+.learn-btn {
+  margin: 1rem 0;
+  padding: 0.6rem 1.2rem;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  background: var(--green-main);
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.learn-btn:hover {
+  background: var(--green-light);
+  color: #022c22;
+}
+
+.progress-summary {
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
     
   
   
