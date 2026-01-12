@@ -259,3 +259,41 @@ document.addEventListener("click", e => {
     setShotFilter("learned");
   }
 });
+
+/* ===============================
+   HOME LEARNING PATH SHORTCUTS
+================================ */
+document.addEventListener("click", e => {
+
+  // BEGINNER → Forehand
+  if (e.target.id === "pathBeginner") {
+    const forehand = shotsData.find(s => s.id === "forehand");
+    if (forehand) {
+      showView("shots");
+      renderShotMenu();
+      renderShotDetails(forehand);
+    }
+  }
+
+  // INTERMEDIATE → Backhand + Volley (show Backhand first)
+  if (e.target.id === "pathIntermediate") {
+    const backhand = shotsData.find(s => s.id === "backhand");
+    if (backhand) {
+      showView("shots");
+      renderShotMenu();
+      renderShotDetails(backhand);
+    }
+  }
+
+  // ADVANCED → Serve + Slice (show Serve first)
+  if (e.target.id === "pathAdvanced") {
+    const serve = shotsData.find(s => s.id === "serve");
+    if (serve) {
+      showView("shots");
+      renderShotMenu();
+      renderShotDetails(serve);
+    }
+  }
+
+});
+
