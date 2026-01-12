@@ -78,6 +78,10 @@ document.querySelectorAll(".nav-btn").forEach(btn => {
     if (view === "home") {
       renderHome();
     }
+    if (view === "quiz") {
+      startQuiz();
+    }
+    
 
     setActiveNav(btn);
   });
@@ -296,4 +300,105 @@ document.addEventListener("click", e => {
   }
 
 });
+/* ===============================
+   QUIZ SYSTEM (FIXED)
+================================ */
 
+let quizOrder = [];
+let currentQuizIndex = 0;
+let quizScore = 0;
+let quizFinished = false;
+
+const quizQuestion = document.getElementById("quizQuestion");
+const quizOptions = document.getElementById("quizOptions");
+const quizFeedback = document.getElementById("quizFeedback");
+const nextQuestionBtn = document.getElementById("nextQuestionBtn");
+const quizScoreBox = document.getElementById("quizScore");
+
+function startQuiz() {
+  quizOrder = [...quizData].sort(() => Math.random() - 0.5);
+  currentQuizIndex = 0;
+  quizScore = 0;
+  quizFinished = false;
+
+  nextQuestionBtn.textContent = "Next Question";
+  nextQuestionBtn.style.display = "none";
+
+  showQuestion();
+}
+
+function showQuestion() {
+  quizFeedback.textContent = "";
+  nextQuestionBtn.style.display = "none";
+
+  // Finished?
+  if (currentQuizIndex >= quizOrder.length) {
+    showFinalScore();
+    return;
+  }
+
+  const q = quizOrder[currentQuizIndex];
+
+  quizQuestion.textContent = `Question ${currentQuizIndex + 1} of ${quizOrder.length}: ${q.question}`;
+  quizOptions.innerHTML = "";
+
+  q.options.forEach(option => {
+    const btn = document.createElement("button");
+    btn.textContent = option;
+
+    btn.onclick = () => checkAnswer(btn, option, q.answer);
+
+    quizOptions.appendChild(btn);
+  });
+
+  quizScoreBox.textContent = `Score: ${quizScore}`;
+}
+
+function checkAnswer(button, selected, correct) {
+  const buttons = quizOptions.querySelectorAll("button");
+  buttons.forEach(b => (b.disabled = true));
+
+  if (selected === correct) {
+    button.classList.add("correct");
+    quizFeedback.textContent = "✅ Correct!";
+    quizScore++;
+  } else {
+    button.classList.add("wrong");
+    quizFeedback.textContent = `❌ Wrong! Correct answer: ${correct}`;
+  }
+
+  quizScoreBox.textContent = `Score: ${quizScore}`;
+  nextQuestionBtn.style.display = "inline-block";
+}
+
+nextQuestionBtn.addEventListener("click", () => {
+  if (quizFinished) {
+    startQuiz();
+  } else {
+    currentQuizIndex++;
+    showQuestion();
+  }
+});
+
+function showFinalScore() {
+  quizFinished = true;
+
+  quizQuestion.textContent = "🏁 Quiz Finished!";
+  quizOptions.innerHTML = "";
+  quizFeedback.innerHTML = `
+    <h3>You scored ${quizScore} out of ${quizOrder.length}</h3>
+    <p>${getScoreMessage()}</p>
+  `;
+
+  nextQuestionBtn.textContent = "Restart Quiz";
+  nextQuestionBtn.style.display = "inline-block";
+}
+
+function getScoreMessage() {
+  const percent = (quizScore / quizOrder.length) * 100;
+
+  if (percent === 100) return "🏆 Perfect! You are a tennis expert!";
+  if (percent >= 70) return "🔥 Great job! You really know your tennis!";
+  if (percent >= 40) return "👍 Good, but you can improve!";
+  return "📘 Keep training and try again!";
+}

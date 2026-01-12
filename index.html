@@ -6,14 +6,14 @@
   <title>Tennis Academy</title>
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/style.css?v=12">
-  <link rel="stylesheet" href="css/components.css?v=12">
-  <link rel="stylesheet" href="css/layout.css?v=12">
+  <link rel="stylesheet" href="css/style.css?v=13">
+  <link rel="stylesheet" href="css/components.css?v=13">
+  <link rel="stylesheet" href="css/layout.css?v=13">
 
   <!-- Scripts -->
-  <script defer src="js/data.js?v=12"></script>
-  <script defer src="js/ui.js?v=12"></script>
-  <script defer src="js/main.js?v=12"></script>
+  <script defer src="js/data.js?v=13"></script>
+  <script defer src="js/ui.js?v=13"></script>
+  <script defer src="js/main.js?v=13"></script>
 </head>
 <body>
 
@@ -25,6 +25,7 @@
       <button class="nav-btn" data-view="shots">Shots</button>
       <button class="nav-btn" data-view="benefits">Benefits</button>
       <button class="nav-btn" data-view="story">My Story</button>
+      <button class="nav-btn" data-view="quiz">Quiz</button>
     </div>
 
     <h1 class="logo" id="homeLogo">TENNIS</h1>
@@ -54,7 +55,7 @@
       <div class="home-content">
 
         <!-- HERO -->
-        <div class="home-hero">
+        <div class="home-hero reveal delay-1">
 
           <!-- LEFT IMAGES -->
           <div class="home-hero-images">
@@ -70,7 +71,7 @@
               Learn tennis the smart way — structured lessons, progress tracking, and professional guidance.
             </p>
 
-            <div class="home-actions">
+            <div class="home-actions ">
               <button class="home-btn primary" id="startTrainingBtn">Start Training</button>
               <button class="home-btn secondary" id="viewProgressBtn">View My Progress</button>
             </div>
@@ -86,7 +87,7 @@
         </div>
 
         <!-- FEATURES -->
-        <div class="home-features">
+        <div class="home-features reveal delay-2">
           <div class="feature-card">📘 Structured Shot Lessons</div>
           <div class="feature-card">✅ Progress Tracking</div>
           <div class="feature-card">⭐ Favorites System</div>
@@ -94,7 +95,7 @@
         </div>
 
         <!-- LEARNING PATHS -->
-        <div class="home-paths">
+        <div class="home-paths reveal delay-3">
           <h2>Choose Your Path</h2>
           <div class="paths-grid">
             <div class="path-card" id="pathBeginner">Beginner</div>
@@ -105,7 +106,7 @@
         </div>
 
         <!-- PROGRESS PREVIEW -->
-        <div class="home-progress" id="homeProgressBox">
+        <div class="home-progress reveal delay-4" id="homeProgressBox">
           <!-- Filled by JS -->
         </div>
 
@@ -131,6 +132,25 @@
          STORY
     ================================ -->
     <section id="story" class="view hidden"></section>
+    <!-- ===============================
+     QUIZ
+     =============================== -->
+<section id="quiz" class="view hidden">
+  <div class="quiz-container card">
+    <h2 id="quizQuestion">Question will appear here</h2>
+
+    <div class="quiz-options" id="quizOptions"></div>
+
+    <p id="quizFeedback"></p>
+
+    <button id="nextQuestionBtn" class="home-btn primary" style="display:none;">
+      Next Question
+    </button>
+
+    <p class="quiz-score" id="quizScore">Score: 0</p>
+  </div>
+</section>
+
 
   </main>
 

@@ -209,13 +209,76 @@ function renderTabContent(tab, shot) {
    BENEFITS
 ================================ */
 function renderBenefits() {
-  document.getElementById("benefits").innerHTML = `
+  const container = document.getElementById("benefits");
+
+  container.innerHTML = `
     <h2>Benefits of Tennis</h2>
 
-    <div class="benefits-grid">
-      ${renderBenefitColumn("Physical Benefits", benefitsData.physical)}
-      ${renderBenefitColumn("Mental Benefits", benefitsData.mental)}
-      ${renderBenefitColumn("Social & Life Benefits", benefitsData.social)}
+    <div class="benefits-tabs">
+      <button class="benefit-tab active" data-type="physical">💪 Physical</button>
+      <button class="benefit-tab" data-type="mental">🧠 Mental</button>
+      <button class="benefit-tab" data-type="social">🤝 Social</button>
+    </div>
+
+    <div id="benefitsContent" class="benefits-content"></div>
+  `;
+
+  // render default
+  renderBenefitsCategory("physical");
+
+  // tab logic
+  const tabs = container.querySelectorAll(".benefit-tab");
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      tabs.forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+
+      const type = tab.dataset.type;
+      renderBenefitsCategory(type);
+    });
+  });
+}
+function renderBenefitsCategory(type) {
+  const content = document.getElementById("benefitsContent");
+
+  const titles = {
+    physical: "Physical Benefits",
+    mental: "Mental Benefits",
+    social: "Social & Life Benefits"
+  };
+
+  const descriptions = {
+    physical: "Tennis is a complete physical workout that builds strength, endurance, speed, and flexibility.",
+    mental: "Tennis strengthens your mind, focus, confidence, and emotional control.",
+    social: "Tennis builds relationships, discipline, sportsmanship, and lifelong habits."
+  };
+
+  const images = {
+    physical: "assets/physical.JPG",
+    mental: "assets/mental.jpg",
+    social: "assets/social.webp"
+  };
+
+  const data = benefitsData[type];
+
+  content.innerHTML = `
+    <div class="benefits-layout">
+
+      <!-- LEFT -->
+      <div class="benefits-left card">
+        ${renderBenefitColumn(titles[type], data)}
+      </div>
+
+      <!-- RIGHT -->
+      <div class="benefits-right card">
+        <h3>${titles[type]}</h3>
+        <p>${descriptions[type]}</p>
+        <img src="${images[type]}" alt="${titles[type]}">
+        <div class="benefits-highlight">
+          💡 Tennis improves your life both on and off the court.
+        </div>
+      </div>
+
     </div>
   `;
 }
@@ -239,6 +302,9 @@ function renderBenefitColumn(title, items) {
     </div>
   `;
 }
+
+
+
 
 /* ===============================
    STORY

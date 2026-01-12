@@ -278,6 +278,22 @@ const shotsData = [
       {
         title: "Discipline",
         desc: "Regular practice develops consistency and work ethic"
+      },
+      {
+        title: "Focus under pressure",
+        desc: "Improves ability to perform in stressful situations"
+      },
+      {
+        title: "Decision making",
+        desc: "Trains fast and accurate choices during rallies"
+      },
+      {
+        title: "Emotional control",
+        desc: "Helps manage frustration and stay calm under pressure"
+      },
+      {
+        title: "Confidence building",
+        desc: "Success on court improves self-belief and mindset"
       }
     ],
   
@@ -301,8 +317,29 @@ const shotsData = [
       {
         title: "Confidence building",
         desc: "Mastering skills and winning points boosts self-esteem"
+      },
+      {
+        title: "Teamwork skills",
+        desc: "Doubles play improves communication and cooperation"
+      },
+      {
+        title: "Leadership development",
+        desc: "Competitive play builds responsibility and initiative"
+      },
+      {
+        title: "Goal setting",
+        desc: "Encourages setting and achieving personal objectives"
+      },
+      {
+        title: "Healthy lifestyle",
+        desc: "Promotes long-term active and disciplined living"
+      },
+      {
+        title: "Global community",
+        desc: "Connects you with players and cultures worldwide"
       }
     ]
+    
   };
   
   
@@ -314,6 +351,60 @@ const shotsData = [
       "assets/mystory2.JPG"
     ]
   };
+
+  const quizData = [
+    {
+      question: "Which shot starts the point?",
+      options: ["Forehand", "Serve", "Volley", "Slice"],
+      answer: "Serve"
+    },
+    {
+      question: "Which shot is usually hit at the net?",
+      options: ["Backhand", "Slice", "Volley", "Serve"],
+      answer: "Volley"
+    },
+    {
+      question: "Which shot uses heavy topspin most often?",
+      options: ["Forehand", "Serve", "Slice", "Volley"],
+      answer: "Forehand"
+    },
+    {
+      question: "Which shot uses underspin?",
+      options: ["Slice", "Forehand", "Serve", "Backhand"],
+      answer: "Slice"
+    },
+    {
+      question: "Which grip is most common for a forehand?",
+      options: ["Eastern", "Continental", "Two-handed", "Panhandle"],
+      answer: "Eastern"
+    },
+    {
+      question: "What is the 'trophy position' part of?",
+      options: ["Backhand", "Volley", "Serve", "Slice"],
+      answer: "Serve"
+    },
+    {
+      question: "Which shot is best for approaching the net?",
+      options: ["Serve", "Slice", "Volley", "Forehand"],
+      answer: "Slice"
+    },
+    {
+      question: "Which shot should have the shortest swing?",
+      options: ["Forehand", "Backhand", "Serve", "Volley"],
+      answer: "Volley"
+    },
+    {
+      question: "What helps generate power on the serve?",
+      options: ["Only arm", "Leg drive", "Wrist only", "Grip strength"],
+      answer: "Leg drive"
+    },
+    {
+      question: "Where should contact point be for most groundstrokes?",
+      options: ["Behind body", "Above head", "In front of body", "Next to hip"],
+      answer: "In front of body"
+    }
+  ];
+  
   
   
   
