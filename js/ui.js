@@ -7,17 +7,16 @@ const shotDisplay = document.getElementById("shotDisplay");
 ================================ */
 function showView(id) {
   appViews.forEach(view => view.classList.add("hidden"));
-
   const target = document.getElementById(id);
-  if (target) {
-    target.classList.remove("hidden");
-  }
+  if (target) target.classList.remove("hidden");
 }
 
 /* ===============================
    SHOTS
 ================================ */
 function renderShotMenu() {
+  const user = getCurrentUserData();
+
   shotMenu.innerHTML = "";
   shotDisplay.innerHTML = "";
 
@@ -32,10 +31,9 @@ function renderShotMenu() {
   `;
 
   const [allBtn, favBtn, learnedBtn] = filterBar.querySelectorAll("button");
-
-  allBtn.addEventListener("click", () => setShotFilter("all"));
-  favBtn.addEventListener("click", () => setShotFilter("favorites"));
-  learnedBtn.addEventListener("click", () => setShotFilter("learned"));
+  allBtn.onclick = () => setShotFilter("all");
+  favBtn.onclick = () => setShotFilter("favorites");
+  learnedBtn.onclick = () => setShotFilter("learned");
 
   shotMenu.appendChild(filterBar);
 
@@ -43,20 +41,23 @@ function renderShotMenu() {
   let visibleShots = shotsData;
 
   if (currentShotFilter === "favorites") {
-    visibleShots = shotsData.filter(s => favoritesState[s.id]);
+    visibleShots = shotsData.filter(s => user.favorites[s.id]);
   }
 
   if (currentShotFilter === "learned") {
-    visibleShots = shotsData.filter(s => progressState[s.id]);
+    visibleShots = shotsData.filter(s => user.progress[s.id]);
   }
+
+  // --- PROGRESS SUMMARY ---
+  renderProgressSummary();
 
   // --- RENDER SHOTS ---
   visibleShots.forEach(shot => {
     const btn = document.createElement("button");
     btn.className = "shot-btn";
 
-    const learned = progressState[shot.id];
-    const favorite = favoritesState[shot.id];
+    const learned = user.progress[shot.id];
+    const favorite = user.favorites[shot.id];
 
     btn.innerHTML = `
       ${shot.name}
@@ -64,16 +65,15 @@ function renderShotMenu() {
       ${favorite ? " ⭐" : ""}
     `;
 
-    btn.addEventListener("click", () => renderShotDetails(shot));
+    btn.onclick = () => renderShotDetails(shot);
     shotMenu.appendChild(btn);
   });
-
-  renderProgressSummary();
 }
 
-
 function renderProgressSummary() {
-  const learnedCount = shotsData.filter(s => progressState[s.id]).length;
+  const user = getCurrentUserData();
+
+  const learnedCount = shotsData.filter(s => user.progress[s.id]).length;
   const total = shotsData.length;
   const percent = Math.round((learnedCount / total) * 100);
 
@@ -87,8 +87,10 @@ function renderProgressSummary() {
 }
 
 function renderShotDetails(shot) {
-  const isLearned = progressState[shot.id];
-  const isFavorite = favoritesState[shot.id];
+  const user = getCurrentUserData();
+
+  const isLearned = user.progress[shot.id];
+  const isFavorite = user.favorites[shot.id];
 
   shotDisplay.innerHTML = `
     <div class="card">
@@ -122,36 +124,30 @@ function renderShotDetails(shot) {
     </div>
   `;
 
-  // MARK AS LEARNED BUTTON LOGIC
-  const learnBtn = shotDisplay.querySelector(".learn-btn");
-  learnBtn.addEventListener("click", () => {
+  // LEARN BUTTON
+  shotDisplay.querySelector(".learn-btn").onclick = () => {
     toggleLearned(shot.id);
     renderShotDetails(shot);
-  });
+  };
 
-  // FAVORITE BUTTON LOGIC
-  const favBtn = shotDisplay.querySelector(".fav-btn");
-  favBtn.addEventListener("click", () => {
+  // FAVORITE BUTTON
+  shotDisplay.querySelector(".fav-btn").onclick = () => {
     toggleFavorite(shot.id);
     renderShotDetails(shot);
-  });
+  };
 
-  // Tabs logic
+  // Tabs
   renderTabContent("technique", shot);
 
   const tabs = shotDisplay.querySelectorAll(".shot-tab");
   tabs.forEach(tab => {
-    tab.addEventListener("click", () => {
+    tab.onclick = () => {
       tabs.forEach(t => t.classList.remove("active"));
       tab.classList.add("active");
-
-      const tabName = tab.dataset.tab;
-      renderTabContent(tabName, shot);
-    });
+      renderTabContent(tab.dataset.tab, shot);
+    };
   });
 }
-
-
 
 function renderTabContent(tab, shot) {
   const container = document.getElementById("tabContent");
@@ -159,51 +155,34 @@ function renderTabContent(tab, shot) {
   if (tab === "technique") {
     container.innerHTML = `
       <h3>When to Use</h3>
-      <ul>
-        ${shot.usedWhen.map(item => `<li>${item}</li>`).join("")}
-      </ul>
-
+      <ul>${shot.usedWhen.map(i => `<li>${i}</li>`).join("")}</ul>
       <h3>Technique Steps</h3>
-      <ul>
-        ${shot.instructions.map(step => `<li>${step}</li>`).join("")}
-      </ul>
+      <ul>${shot.instructions.map(i => `<li>${i}</li>`).join("")}</ul>
     `;
   }
 
   if (tab === "mistakes") {
     container.innerHTML = `
       <h3>Common Mistakes</h3>
-      <ul>
-        ${shot.commonMistakes.map(m => `<li>${m}</li>`).join("")}
-      </ul>
+      <ul>${shot.commonMistakes.map(i => `<li>${i}</li>`).join("")}</ul>
     `;
   }
 
   if (tab === "drills") {
     container.innerHTML = `
       <h3>Training Drills</h3>
-      <ul>
-        ${shot.drills.map(d => `<li>${d}</li>`).join("")}
-      </ul>
+      <ul>${shot.drills.map(i => `<li>${i}</li>`).join("")}</ul>
     `;
   }
 
   if (tab === "tips") {
     container.innerHTML = `
       <h3>Coaching Tips</h3>
-      <ul>
-        ${shot.coachingTips.map(t => `<li>${t}</li>`).join("")}
-      </ul>
-
-      <p class="pro-tip">
-        <strong>Pro Tip:</strong> ${shot.proTip}
-      </p>
+      <ul>${shot.coachingTips.map(i => `<li>${i}</li>`).join("")}</ul>
+      <p class="pro-tip"><strong>Pro Tip:</strong> ${shot.proTip}</p>
     `;
   }
 }
-
-
-
 
 /* ===============================
    BENEFITS
@@ -213,31 +192,26 @@ function renderBenefits() {
 
   container.innerHTML = `
     <h2>Benefits of Tennis</h2>
-
     <div class="benefits-tabs">
       <button class="benefit-tab active" data-type="physical">💪 Physical</button>
       <button class="benefit-tab" data-type="mental">🧠 Mental</button>
       <button class="benefit-tab" data-type="social">🤝 Social</button>
     </div>
-
     <div id="benefitsContent" class="benefits-content"></div>
   `;
 
-  // render default
   renderBenefitsCategory("physical");
 
-  // tab logic
   const tabs = container.querySelectorAll(".benefit-tab");
   tabs.forEach(tab => {
-    tab.addEventListener("click", () => {
+    tab.onclick = () => {
       tabs.forEach(t => t.classList.remove("active"));
       tab.classList.add("active");
-
-      const type = tab.dataset.type;
-      renderBenefitsCategory(type);
-    });
+      renderBenefitsCategory(tab.dataset.type);
+    };
   });
 }
+
 function renderBenefitsCategory(type) {
   const content = document.getElementById("benefitsContent");
 
@@ -245,12 +219,6 @@ function renderBenefitsCategory(type) {
     physical: "Physical Benefits",
     mental: "Mental Benefits",
     social: "Social & Life Benefits"
-  };
-
-  const descriptions = {
-    physical: "Tennis is a complete physical workout that builds strength, endurance, speed, and flexibility.",
-    mental: "Tennis strengthens your mind, focus, confidence, and emotional control.",
-    social: "Tennis builds relationships, discipline, sportsmanship, and lifelong habits."
   };
 
   const images = {
@@ -263,48 +231,35 @@ function renderBenefitsCategory(type) {
 
   content.innerHTML = `
     <div class="benefits-layout">
-
-      <!-- LEFT -->
       <div class="benefits-left card">
         ${renderBenefitColumn(titles[type], data)}
       </div>
-
-      <!-- RIGHT -->
       <div class="benefits-right card">
         <h3>${titles[type]}</h3>
-        <p>${descriptions[type]}</p>
-        <img src="${images[type]}" alt="${titles[type]}">
+        <img src="${images[type]}">
         <div class="benefits-highlight">
           💡 Tennis improves your life both on and off the court.
         </div>
       </div>
-
     </div>
   `;
 }
 
 function renderBenefitColumn(title, items) {
   return `
-    <div class="benefit-column card">
+    <div class="benefit-column">
       <h3>${title}</h3>
       <ul>
-        ${items
-          .map(
-            item => `
-            <li>
-              <strong>${item.title}</strong><br>
-              <span>${item.desc}</span>
-            </li>
-          `
-          )
-          .join("")}
+        ${items.map(item => `
+          <li>
+            <strong>${item.title}</strong><br>
+            <span>${item.desc}</span>
+          </li>
+        `).join("")}
       </ul>
     </div>
   `;
 }
-
-
-
 
 /* ===============================
    STORY
@@ -312,26 +267,23 @@ function renderBenefitColumn(title, items) {
 function renderStory() {
   document.getElementById("story").innerHTML = `
     <h2>My Story</h2>
-
-    <p class="story-text">
-      ${aboutContent.paragraph}
-    </p>
-
+    <p class="story-text">${aboutContent.paragraph}</p>
     <div class="story-images">
-      <img src="${aboutContent.images[0]}" loading="lazy" alt="My tennis journey">
-      <img src="${aboutContent.images[1]}" alt="Training and competition">
+      <img src="${aboutContent.images[0]}" loading="lazy">
+      <img src="${aboutContent.images[1]}">
     </div>
   `;
 }
 
 /* ===============================
-   HOME PAGE LOGIC
+   HOME
 ================================ */
 function renderHome() {
   const box = document.getElementById("homeProgressBox");
   if (!box) return;
 
-  const learned = shotsData.filter(s => progressState[s.id]).length;
+  const user = getCurrentUserData();
+  const learned = shotsData.filter(s => user.progress[s.id]).length;
   const total = shotsData.length;
   const percent = Math.round((learned / total) * 100);
 
@@ -343,4 +295,3 @@ function renderHome() {
     </div>
   `;
 }
-

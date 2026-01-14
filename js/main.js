@@ -1,9 +1,48 @@
 console.log("main.js loaded");
 
 /* ===============================
+   AUTH GUARD
+================================ */
+const USERS_KEY = "tennis_users";
+const CURRENT_USER_KEY = "tennis_current_user";
+
+if (!localStorage.getItem(CURRENT_USER_KEY)) {
+  window.location.href = "login.html";
+}
+
+/* ===============================
+   USER STORE HELPERS
+================================ */
+function loadUsers() {
+  const raw = localStorage.getItem(USERS_KEY);
+  return raw ? JSON.parse(raw) : {};
+}
+
+function saveUsers(users) {
+  localStorage.setItem(USERS_KEY, JSON.stringify(users));
+}
+
+function getCurrentUsername() {
+  return localStorage.getItem(CURRENT_USER_KEY);
+}
+
+function getCurrentUserData() {
+  const users = loadUsers();
+  const username = getCurrentUsername();
+  return users[username];
+}
+
+function saveCurrentUserData(userData) {
+  const users = loadUsers();
+  const username = getCurrentUsername();
+  users[username] = userData;
+  saveUsers(users);
+}
+
+/* ===============================
    SHOT FILTER STATE
 ================================ */
-let currentShotFilter = "all"; // "all" | "favorites" | "learned"
+let currentShotFilter = "all"; // all | favorites | learned
 
 function setShotFilter(filter) {
   currentShotFilter = filter;
@@ -11,46 +50,22 @@ function setShotFilter(filter) {
 }
 
 /* ===============================
-   FAVORITES SYSTEM
+   FAVORITES (PER USER)
 ================================ */
-const FAV_KEY = "tennis_favorites";
-
-function loadFavorites() {
-  const saved = localStorage.getItem(FAV_KEY);
-  return saved ? JSON.parse(saved) : {};
-}
-
-function saveFavorites(favs) {
-  localStorage.setItem(FAV_KEY, JSON.stringify(favs));
-}
-
-let favoritesState = loadFavorites();
-
 function toggleFavorite(shotId) {
-  favoritesState[shotId] = !favoritesState[shotId];
-  saveFavorites(favoritesState);
+  const user = getCurrentUserData();
+  user.favorites[shotId] = !user.favorites[shotId];
+  saveCurrentUserData(user);
   renderShotMenu();
 }
 
 /* ===============================
-   PROGRESS TRACKING
+   PROGRESS (PER USER)
 ================================ */
-const STORAGE_KEY = "tennis_progress";
-
-function loadProgress() {
-  const saved = localStorage.getItem(STORAGE_KEY);
-  return saved ? JSON.parse(saved) : {};
-}
-
-function saveProgress(progress) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
-}
-
-let progressState = loadProgress();
-
 function toggleLearned(shotId) {
-  progressState[shotId] = !progressState[shotId];
-  saveProgress(progressState);
+  const user = getCurrentUserData();
+  user.progress[shotId] = !user.progress[shotId];
+  saveCurrentUserData(user);
   renderShotMenu();
 }
 
@@ -63,25 +78,10 @@ document.querySelectorAll(".nav-btn").forEach(btn => {
 
     showView(view);
 
-    if (view === "shots") {
-      renderShotMenu();
-    }
-
-    if (view === "benefits") {
-      renderBenefits();
-    }
-
-    if (view === "story") {
-      renderStory();
-    }
-
-    if (view === "home") {
-      renderHome();
-    }
-    if (view === "quiz") {
-      startQuiz();
-    }
-    
+    if (view === "shots") renderShotMenu();
+    if (view === "benefits") renderBenefits();
+    if (view === "story") renderStory();
+    if (view === "quiz") startQuiz();
 
     setActiveNav(btn);
   });
@@ -91,55 +91,42 @@ document.querySelectorAll(".nav-btn").forEach(btn => {
    LOGO → HOME
 ================================ */
 const homeLogo = document.getElementById("homeLogo");
-
 if (homeLogo) {
   homeLogo.addEventListener("click", () => {
     showView("home");
-    renderHome();
     clearActiveNav();
   });
-} else {
-  console.error("homeLogo not found — check ID in HTML");
 }
 
 /* ===============================
    ACTIVE STATE
 ================================ */
 function setActiveNav(activeBtn) {
-  document.querySelectorAll(".nav-btn").forEach(btn =>
-    btn.classList.remove("active")
-  );
+  document.querySelectorAll(".nav-btn").forEach(btn => btn.classList.remove("active"));
   activeBtn.classList.add("active");
 }
 
 function clearActiveNav() {
-  document.querySelectorAll(".nav-btn").forEach(btn =>
-    btn.classList.remove("active")
-  );
+  document.querySelectorAll(".nav-btn").forEach(btn => btn.classList.remove("active"));
 }
 
 /* ===============================
    DEFAULT VIEW
 ================================ */
 showView("home");
-renderHome();
 
 /* ===============================
-   LIGHTBOX FOR IMAGES
+   LIGHTBOX
 ================================ */
 document.addEventListener("click", e => {
   if (e.target.tagName === "IMG") {
-    openLightbox(e.target.src);
+    const overlay = document.createElement("div");
+    overlay.className = "lightbox";
+    overlay.innerHTML = `<img src="${e.target.src}">`;
+    overlay.onclick = () => overlay.remove();
+    document.body.appendChild(overlay);
   }
 });
-
-function openLightbox(src) {
-  const overlay = document.createElement("div");
-  overlay.className = "lightbox";
-  overlay.innerHTML = `<img src="${src}">`;
-  overlay.onclick = () => overlay.remove();
-  document.body.appendChild(overlay);
-}
 
 /* ===============================
    SEARCH
@@ -147,19 +134,13 @@ function openLightbox(src) {
 const searchInput = document.getElementById("searchInput");
 const searchResults = document.getElementById("searchResults");
 
-/* ===============================
-   BUILD SEARCH INDEX
-================================ */
 const searchIndex = [];
 
 // Home
 searchIndex.push({
   label: "Tennis (Home)",
   category: "Home",
-  action: () => {
-    showView("home");
-    renderHome();
-  }
+  action: () => showView("home")
 });
 
 // Shots
@@ -178,7 +159,7 @@ shotsData.forEach(shot => {
 // Benefits
 Object.keys(benefitsData).forEach(section => {
   searchIndex.push({
-    label: `${section.charAt(0).toUpperCase() + section.slice(1)} Benefits`,
+    label: section.charAt(0).toUpperCase() + section.slice(1) + " Benefits",
     category: "Benefits",
     action: () => {
       showView("benefits");
@@ -213,36 +194,19 @@ searchInput.addEventListener("input", e => {
     item.label.toLowerCase().includes(query)
   );
 
-  if (matches.length === 0) {
-    searchResults.classList.add("hidden");
-    return;
-  }
-
   matches.forEach(item => {
     const div = document.createElement("div");
-    div.innerHTML = `
-      ${item.label}
-      <div class="category">${item.category || ""}</div>
-    `;
-    div.addEventListener("click", () => {
+    div.innerHTML = `${item.label}<div class="category">${item.category}</div>`;
+    div.onclick = () => {
       item.action();
       clearSearch();
-    });
+    };
     searchResults.appendChild(div);
   });
 
   searchResults.classList.remove("hidden");
 });
 
-/* ENTER KEY SUPPORT */
-searchInput.addEventListener("keydown", e => {
-  if (e.key === "Enter") {
-    const first = searchResults.querySelector("div");
-    if (first) first.click();
-  }
-});
-
-/* CLEAR SEARCH */
 function clearSearch() {
   searchInput.value = "";
   searchResults.innerHTML = "";
@@ -250,7 +214,7 @@ function clearSearch() {
 }
 
 /* ===============================
-   HOME BUTTONS
+   HOME SHORTCUTS
 ================================ */
 document.addEventListener("click", e => {
   if (e.target.id === "startTrainingBtn") {
@@ -265,45 +229,8 @@ document.addEventListener("click", e => {
 });
 
 /* ===============================
-   HOME LEARNING PATH SHORTCUTS
+   QUIZ SYSTEM (PER USER)
 ================================ */
-document.addEventListener("click", e => {
-
-  // BEGINNER → Forehand
-  if (e.target.id === "pathBeginner") {
-    const forehand = shotsData.find(s => s.id === "forehand");
-    if (forehand) {
-      showView("shots");
-      renderShotMenu();
-      renderShotDetails(forehand);
-    }
-  }
-
-  // INTERMEDIATE → Backhand + Volley (show Backhand first)
-  if (e.target.id === "pathIntermediate") {
-    const backhand = shotsData.find(s => s.id === "backhand");
-    if (backhand) {
-      showView("shots");
-      renderShotMenu();
-      renderShotDetails(backhand);
-    }
-  }
-
-  // ADVANCED → Serve + Slice (show Serve first)
-  if (e.target.id === "pathAdvanced") {
-    const serve = shotsData.find(s => s.id === "serve");
-    if (serve) {
-      showView("shots");
-      renderShotMenu();
-      renderShotDetails(serve);
-    }
-  }
-
-});
-/* ===============================
-   QUIZ SYSTEM (FIXED)
-================================ */
-
 let quizOrder = [];
 let currentQuizIndex = 0;
 let quizScore = 0;
@@ -320,10 +247,8 @@ function startQuiz() {
   currentQuizIndex = 0;
   quizScore = 0;
   quizFinished = false;
-
   nextQuestionBtn.textContent = "Next Question";
   nextQuestionBtn.style.display = "none";
-
   showQuestion();
 }
 
@@ -331,7 +256,6 @@ function showQuestion() {
   quizFeedback.textContent = "";
   nextQuestionBtn.style.display = "none";
 
-  // Finished?
   if (currentQuizIndex >= quizOrder.length) {
     showFinalScore();
     return;
@@ -354,8 +278,11 @@ function showQuestion() {
   quizScoreBox.textContent = `Score: ${quizScore}`;
 }
 
+
 function checkAnswer(button, selected, correct) {
   const buttons = quizOptions.querySelectorAll("button");
+
+  // Disable all buttons
   buttons.forEach(b => (b.disabled = true));
 
   if (selected === correct) {
@@ -365,24 +292,44 @@ function checkAnswer(button, selected, correct) {
   } else {
     button.classList.add("wrong");
     quizFeedback.textContent = `❌ Wrong! Correct answer: ${correct}`;
+
+    // Highlight correct one
+    buttons.forEach(b => {
+      if (b.textContent === correct) {
+        b.classList.add("correct");
+      }
+    });
   }
 
   quizScoreBox.textContent = `Score: ${quizScore}`;
   nextQuestionBtn.style.display = "inline-block";
 }
 
-nextQuestionBtn.addEventListener("click", () => {
-  if (quizFinished) {
-    startQuiz();
-  } else {
+
+nextQuestionBtn.onclick = () => {
+  if (quizFinished) startQuiz();
+  else {
     currentQuizIndex++;
     showQuestion();
   }
-});
+};
 
 function showFinalScore() {
   quizFinished = true;
 
+  // ===== SAVE SCORE TO CURRENT USER =====
+  const user = getCurrentUserData();
+
+  if (user) {
+    user.quizScores.push({
+      score: quizScore,
+      total: quizOrder.length,
+      date: new Date().toISOString()
+    });
+    saveCurrentUserData(user);
+  }
+
+  // ===== UI =====
   quizQuestion.textContent = "🏁 Quiz Finished!";
   quizOptions.innerHTML = "";
   quizFeedback.innerHTML = `
@@ -393,12 +340,14 @@ function showFinalScore() {
   nextQuestionBtn.textContent = "Restart Quiz";
   nextQuestionBtn.style.display = "inline-block";
 }
-
 function getScoreMessage() {
   const percent = (quizScore / quizOrder.length) * 100;
 
   if (percent === 100) return "🏆 Perfect! You are a tennis expert!";
-  if (percent >= 70) return "🔥 Great job! You really know your tennis!";
-  if (percent >= 40) return "👍 Good, but you can improve!";
-  return "📘 Keep training and try again!";
+  if (percent >= 80) return "🔥 Excellent! You really know your tennis!";
+  if (percent >= 60) return "👍 Good job! Keep improving!";
+  if (percent >= 40) return "📘 Not bad, but you should practice more!";
+  return "🎾 Keep training and try again!";
 }
+
+
