@@ -40,8 +40,23 @@ function getCurrentUsername() {
 function getCurrentUserData() {
   const users = loadUsers();
   const username = getCurrentUsername();
-  return users[username];
+  const user = users[username];
+
+  if (!user) return null;
+
+  
+  if (!user.progress) user.progress = {};
+  if (!user.favorites) user.favorites = {};
+  if (!user.quizScores) user.quizScores = [];
+  if (!user.achievements) user.achievements = {};
+
+  
+  users[username] = user;
+  saveUsers(users);
+
+  return user;
 }
+
 
 function saveCurrentUserData(userData) {
   const users = loadUsers();
