@@ -94,6 +94,15 @@
   }
 }
 
+#profile {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+#profile .card {
+  margin-bottom: 1.5rem;
+}
+
 
 
   

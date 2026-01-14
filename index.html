@@ -12,8 +12,11 @@
 
   <!-- Scripts -->
   <script defer src="js/data.js?v=15"></script>
+  <script defer src="js/achievements.js"></script>
   <script defer src="js/ui.js?v=15"></script>
   <script defer src="js/main.js?v=15"></script>
+  
+
 </head>
 <body>
 
@@ -26,11 +29,14 @@
       <button class="nav-btn" data-view="benefits">Benefits</button>
       <button class="nav-btn" data-view="story">My Story</button>
       <button class="nav-btn" data-view="quiz">Quiz</button>
+      <button class="nav-btn" data-view="profile">Profile</button>
+
     </div>
 
     <h1 class="logo" id="homeLogo">TENNIS</h1>
 
     <div class="nav-right">
+      <button id="logoutBtn" class="nav-btn">Logout</button>
       <div class="search-wrapper">
         <input
           type="text"
@@ -39,7 +45,10 @@
           autocomplete="off"
         >
         <div id="searchResults" class="search-results hidden"></div>
+    
       </div>
+    
+
     </div>
   </header>
 
@@ -47,6 +56,8 @@
        APP
   ================================ -->
   <main id="app">
+    <section id="profile" class="view hidden"></section>
+
 
     <!-- ===============================
          HOME

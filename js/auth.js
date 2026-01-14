@@ -47,7 +47,8 @@ if (registerBtn) {
       password: password,
       progress: {},
       favorites: {},
-      quizScores: []
+      quizScores: [],
+      achievements: {}
     };
 
     saveUsers(users);

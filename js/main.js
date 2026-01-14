@@ -9,6 +9,17 @@ const CURRENT_USER_KEY = "tennis_current_user";
 if (!localStorage.getItem(CURRENT_USER_KEY)) {
   window.location.href = "login.html";
 }
+/* ===============================
+   LOGOUT BUTTON
+================================ */
+const logoutBtn = document.getElementById("logoutBtn");
+
+if (logoutBtn) {
+  logoutBtn.onclick = () => {
+    localStorage.removeItem(CURRENT_USER_KEY);
+    window.location.href = "login.html";
+  };
+}
 
 /* ===============================
    USER STORE HELPERS
@@ -39,6 +50,54 @@ function saveCurrentUserData(userData) {
   saveUsers(users);
 }
 
+
+/* ===============================
+   ACHIEVEMENTS SYSTEM
+================================ */
+
+function checkAchievements() {
+  const user = getCurrentUserData();
+  if (!user) return;
+
+  let unlockedSomething = false;
+
+  achievementsList.forEach(ach => {
+    if (!user.achievements[ach.id]) {
+      if (ach.check(user)) {
+        user.achievements[ach.id] = true;
+        unlockedSomething = true;
+        showAchievementPopup(ach.title);
+      }
+    }
+  });
+
+  if (unlockedSomething) {
+    saveCurrentUserData(user);
+  }
+}
+
+function showAchievementPopup(title) {
+  const overlay = document.createElement("div");
+  overlay.className = "achievement-overlay";
+
+  overlay.innerHTML = `
+    <div class="achievement-modal">
+      <div class="achievement-icon">🏆</div>
+      <h2>Achievement Unlocked!</h2>
+      <p>${title}</p>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+
+  setTimeout(() => {
+    overlay.classList.add("hide");
+    setTimeout(() => overlay.remove(), 500);
+  }, 2500);
+}
+
+
+
 /* ===============================
    SHOT FILTER STATE
 ================================ */
@@ -57,6 +116,7 @@ function toggleFavorite(shotId) {
   user.favorites[shotId] = !user.favorites[shotId];
   saveCurrentUserData(user);
   renderShotMenu();
+  checkAchievements();
 }
 
 /* ===============================
@@ -67,6 +127,7 @@ function toggleLearned(shotId) {
   user.progress[shotId] = !user.progress[shotId];
   saveCurrentUserData(user);
   renderShotMenu();
+  checkAchievements(); 
 }
 
 /* ===============================
@@ -82,6 +143,8 @@ document.querySelectorAll(".nav-btn").forEach(btn => {
     if (view === "benefits") renderBenefits();
     if (view === "story") renderStory();
     if (view === "quiz") startQuiz();
+    if (view === "profile") renderProfile();
+
 
     setActiveNav(btn);
   });
@@ -94,6 +157,7 @@ const homeLogo = document.getElementById("homeLogo");
 if (homeLogo) {
   homeLogo.addEventListener("click", () => {
     showView("home");
+    renderHome();
     clearActiveNav();
   });
 }
@@ -114,6 +178,7 @@ function clearActiveNav() {
    DEFAULT VIEW
 ================================ */
 showView("home");
+renderHome();
 
 /* ===============================
    LIGHTBOX
@@ -327,6 +392,7 @@ function showFinalScore() {
       date: new Date().toISOString()
     });
     saveCurrentUserData(user);
+    checkAchievements();
   }
 
   // ===== UI =====
