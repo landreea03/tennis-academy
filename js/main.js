@@ -293,20 +293,56 @@ function clearSearch() {
   searchResults.classList.add("hidden");
 }
 
+
 /* ===============================
-   HOME SHORTCUTS
+   HOME SHORTCUTS (LEARNING PATHS)
 ================================ */
 document.addEventListener("click", e => {
+
+  // START TRAINING
   if (e.target.id === "startTrainingBtn") {
     showView("shots");
     renderShotMenu();
   }
 
+  // VIEW PROGRESS
   if (e.target.id === "viewProgressBtn") {
     showView("shots");
     setShotFilter("learned");
   }
+
+  // BEGINNER → Forehand
+  if (e.target.id === "pathBeginner") {
+    const shot = shotsData.find(s => s.id === "forehand");
+    if (shot) {
+      showView("shots");
+      renderShotMenu();
+      renderShotDetails(shot);
+    }
+  }
+
+  // INTERMEDIATE → Backhand
+  if (e.target.id === "pathIntermediate") {
+    const shot = shotsData.find(s => s.id === "backhand");
+    if (shot) {
+      showView("shots");
+      renderShotMenu();
+      renderShotDetails(shot);
+    }
+  }
+
+  // ADVANCED → Serve
+  if (e.target.id === "pathAdvanced") {
+    const shot = shotsData.find(s => s.id === "serve");
+    if (shot) {
+      showView("shots");
+      renderShotMenu();
+      renderShotDetails(shot);
+    }
+  }
+
 });
+
 
 /* ===============================
    QUIZ SYSTEM (PER USER)
