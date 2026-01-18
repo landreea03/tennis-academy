@@ -310,6 +310,8 @@ function renderProfile() {
   const favoriteCount = shotsData.filter(s => user.favorites[s.id]).length;
   const totalShots = shotsData.length;
   const progressPercent = Math.round((learnedCount / totalShots) * 100);
+  const streak = user.streak || { current: 1, best: 1 };
+
 
   const quizAttempts = user.quizScores.length;
   const bestScore = quizAttempts
@@ -336,6 +338,9 @@ function renderProfile() {
       <div class="card">🧠 Quiz Attempts<br><strong>${quizAttempts}</strong></div>
       <div class="card">🏆 Best Quiz Score<br><strong>${bestScore}</strong></div>
       <div class="card">📈 Avg Quiz Score<br><strong>${avgScore}</strong></div>
+      <div class="card">🔥 Current Streak<br><strong>${streak.current} days</strong></div>
+      <div class="card">🏆 Best Streak<br><strong>${streak.best} days</strong></div>
+
     </div>
 
     <h3>🏆 Achievements</h3>

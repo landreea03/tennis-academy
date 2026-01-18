@@ -45,12 +45,26 @@ if (registerBtn) {
 
     users[username] = {
       password: password,
+    
+      // Learning data
       progress: {},
       favorites: {},
       quizScores: [],
-      achievements: {}
+      achievements: {},
+    
+      
+      xp: 0,
+      level: 1,
+    
+      streak: {
+        current: 0,
+        best: 0,
+        lastActive: null
+      },
+    
+      createdAt: new Date().toISOString()
     };
-
+    
     saveUsers(users);
 
     error.style.color = "#7CFFB2";

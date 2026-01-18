@@ -44,13 +44,24 @@ function getCurrentUserData() {
 
   if (!user) return null;
 
-  
+  // Backward compatibility / auto-upgrade old users
   if (!user.progress) user.progress = {};
   if (!user.favorites) user.favorites = {};
   if (!user.quizScores) user.quizScores = [];
   if (!user.achievements) user.achievements = {};
 
-  
+  if (user.xp === undefined) user.xp = 0;
+  if (user.level === undefined) user.level = 1;
+
+  if (!user.streak) {
+    const today = new Date().toDateString();
+    user.streak = {
+      current: 1,
+      best: 1,
+      lastActive: today
+    };
+  }
+
   users[username] = user;
   saveUsers(users);
 
@@ -58,11 +69,76 @@ function getCurrentUserData() {
 }
 
 
+
+
 function saveCurrentUserData(userData) {
   const users = loadUsers();
   const username = getCurrentUsername();
   users[username] = userData;
   saveUsers(users);
+}
+
+/* ===============================
+   XP & LEVEL SYSTEM
+================================ */
+
+function addXP(amount) {
+  const user = getCurrentUserData();
+  if (!user) return;
+
+  user.xp += amount;
+
+  const oldLevel = user.level;
+
+  // Level formula: every 100 XP = new level
+  user.level = Math.floor(user.xp / 100) + 1;
+
+  if (user.level > oldLevel) {
+    showLevelUpPopup(user.level);
+  }
+
+  saveCurrentUserData(user);
+}
+
+function showLevelUpPopup(level) {
+  const popup = document.createElement("div");
+  popup.className = "levelup-popup";
+  popup.innerHTML = `
+    🎉 <strong>Level Up!</strong><br>
+    You reached <strong>Level ${level}</strong>!
+  `;
+
+  document.body.appendChild(popup);
+
+  setTimeout(() => popup.remove(), 3500);
+}
+
+/* ===============================
+   STREAK SYSTEM
+================================ */
+
+function updateStreak() {
+  const user = getCurrentUserData();
+  if (!user) return;
+
+  const today = new Date().toDateString();
+  const last = user.streak.lastActive;
+
+  if (last !== today) {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    if (last === yesterday.toDateString()) {
+      user.streak.current += 1;
+    } else {
+      user.streak.current = 1;
+    }
+
+    user.streak.best = Math.max(user.streak.best, user.streak.current);
+    user.streak.lastActive = today;
+
+    saveCurrentUserData(user);
+  }
 }
 
 
@@ -141,6 +217,7 @@ function toggleLearned(shotId) {
   const user = getCurrentUserData();
   user.progress[shotId] = !user.progress[shotId];
   saveCurrentUserData(user);
+  addXP(20);
   renderShotMenu();
   checkAchievements(); 
 }
@@ -171,6 +248,7 @@ document.querySelectorAll(".nav-btn").forEach(btn => {
 const homeLogo = document.getElementById("homeLogo");
 if (homeLogo) {
   homeLogo.addEventListener("click", () => {
+    updateStreak();
     showView("home");
     renderHome();
     clearActiveNav();
@@ -192,6 +270,7 @@ function clearActiveNav() {
 /* ===============================
    DEFAULT VIEW
 ================================ */
+updateStreak();
 showView("home");
 renderHome();
 
@@ -443,6 +522,7 @@ function showFinalScore() {
       date: new Date().toISOString()
     });
     saveCurrentUserData(user);
+    addXP(quizScore * 10);
     checkAchievements();
   }
 
