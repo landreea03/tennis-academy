@@ -14,6 +14,8 @@
   <script defer src="js/data.js?v=17"></script>
   <script defer src="js/achievements.js?v=17"></script>
   <script defer src="js/ui.js?v=17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <script defer src="js/main.js?v=17"></script>
   
 
@@ -56,7 +58,22 @@
        APP
   ================================ -->
   <main id="app">
-    <section id="profile" class="view hidden"></section>
+    <section id="profile" class="view hidden">
+      <div id="profileContent"></div>
+    
+      <div class="charts-grid">
+        <div class="card">
+          <h3>📈 Quiz Scores</h3>
+          <canvas id="quizChart"></canvas>
+        </div>
+    
+        <div class="card">
+          <h3>📊 Learning Progress</h3>
+          <canvas id="progressChart"></canvas>
+        </div>
+      </div>
+    </section>
+    
 
 
     <!-- ===============================

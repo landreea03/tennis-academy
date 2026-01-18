@@ -297,123 +297,162 @@ function renderHome() {
 }
 
 function renderProfile() {
-  const user = getCurrentUserData();
   const container = document.getElementById("profile");
+  const user = getCurrentUserData();
 
   if (!user) {
-    container.innerHTML = "<p>Please log in again.</p>";
+    container.innerHTML = "<p>No user data found.</p>";
     return;
   }
 
-  const username = getCurrentUsername();
-
-  // Progress stats
-  const learnedShots = Object.keys(user.progress).filter(id => user.progress[id]);
-  const favoriteShots = Object.keys(user.favorites).filter(id => user.favorites[id]);
-  const learnedCount = learnedShots.length;
+  // --- Stats ---
+  const learnedCount = shotsData.filter(s => user.progress[s.id]).length;
+  const favoriteCount = shotsData.filter(s => user.favorites[s.id]).length;
   const totalShots = shotsData.length;
   const progressPercent = Math.round((learnedCount / totalShots) * 100);
 
-  // Achievements
-  const unlockedAchievements = Object.entries(user.achievements)
-    .filter(([_, v]) => v)
-    .map(([id]) => achievementsList.find(a => a.id === id))
-    .filter(Boolean);
+  const quizAttempts = user.quizScores.length;
+  const bestScore = quizAttempts
+    ? Math.max(...user.quizScores.map(q => q.score))
+    : 0;
 
-  // Quiz stats
-  const quizCount = user.quizScores.length;
-  const bestScore = quizCount === 0 ? 0 : Math.max(...user.quizScores.map(q => q.score));
+  const avgScore = quizAttempts
+    ? Math.round(
+        user.quizScores.reduce((sum, q) => sum + q.score, 0) / quizAttempts
+      )
+    : 0;
 
+  // --- Achievements ---
+  const unlocked = Object.entries(user.achievements || {}).filter(([_, v]) => v);
+
+  // --- Render ---
   container.innerHTML = `
-    <div class="profile-dashboard">
+    <h2>👤 Profile: ${getCurrentUsername()}</h2>
 
-      <!-- HEADER -->
-      <div class="card profile-header">
-        <h2>👤 ${username}</h2>
-        <p>Welcome back to Tennis Academy</p>
-      </div>
+    <div class="profile-stats-grid">
+      <div class="card">📘 Learned Shots<br><strong>${learnedCount}/${totalShots}</strong></div>
+      <div class="card">⭐ Favorites<br><strong>${favoriteCount}</strong></div>
+      <div class="card">📊 Progress<br><strong>${progressPercent}%</strong></div>
+      <div class="card">🧠 Quiz Attempts<br><strong>${quizAttempts}</strong></div>
+      <div class="card">🏆 Best Quiz Score<br><strong>${bestScore}</strong></div>
+      <div class="card">📈 Avg Quiz Score<br><strong>${avgScore}</strong></div>
+    </div>
 
-      <!-- STATS -->
-      <div class="profile-stats">
-        <div class="card stat-card">📘 Shots Learned<br><strong>${learnedCount}/${totalShots}</strong></div>
-        <div class="card stat-card">⭐ Favorites<br><strong>${favoriteShots.length}</strong></div>
-        <div class="card stat-card">📝 Quizzes Taken<br><strong>${quizCount}</strong></div>
-        <div class="card stat-card">🏆 Best Quiz Score<br><strong>${bestScore}</strong></div>
-      </div>
+    <h3>🏆 Achievements</h3>
+    <div class="profile-achievements">
+      ${
+        achievementsList.map(a => {
+          const isUnlocked = user.achievements[a.id];
+          return `
+            <div class="achievement-card ${isUnlocked ? "unlocked" : "locked"}">
+              ${isUnlocked ? "🏆" : "🔒"} ${a.title}
+            </div>
+          `;
+        }).join("")
+      }
+    </div>
 
-      <!-- PROGRESS -->
+    <h3>📝 Quiz History</h3>
+    <div class="profile-quiz-history">
+      ${
+        user.quizScores.length === 0
+          ? "<p>No quizzes taken yet.</p>"
+          : user.quizScores
+              .slice()
+              .reverse()
+              .map(
+                q => `
+                <div class="card">
+                  Score: <strong>${q.score}/${q.total}</strong><br>
+                  Date: ${new Date(q.date).toLocaleString()}
+                </div>
+              `
+              )
+              .join("")
+      }
+    </div>
+
+    <h3>📊 Your Stats</h3>
+    <div class="charts-grid">
       <div class="card">
-        <h3>📈 Progress</h3>
-        <div class="progress-bar">
-          <div class="progress-fill" style="width:${progressPercent}%"></div>
-        </div>
-        <p>${progressPercent}% completed</p>
+        <h4>📈 Quiz Scores Over Time</h4>
+        <canvas id="quizChart"></canvas>
       </div>
 
-      <!-- ACHIEVEMENTS -->
       <div class="card">
-        <h3>🏆 Achievements</h3>
-        <div class="achievements-grid">
-          ${
-            unlockedAchievements.length === 0
-              ? "<p>No achievements yet</p>"
-              : unlockedAchievements.map(a => `
-                  <div class="achievement-card">
-                    🏆
-                    <div>${a.title}</div>
-                  </div>
-                `).join("")
-          }
-        </div>
+        <h4>🍩 Learning Progress</h4>
+        <canvas id="progressChart"></canvas>
       </div>
-
-      <!-- LEARNED SHOTS -->
-      <div class="card">
-        <h3>📘 Learned Shots</h3>
-        <ul>
-          ${
-            learnedShots.length === 0
-              ? "<li>None yet</li>"
-              : learnedShots.map(id => {
-                  const s = shotsData.find(x => x.id === id);
-                  return `<li>${s ? s.name : id}</li>`;
-                }).join("")
-          }
-        </ul>
-      </div>
-
-      <!-- FAVORITES -->
-      <div class="card">
-        <h3>⭐ Favorite Shots</h3>
-        <ul>
-          ${
-            favoriteShots.length === 0
-              ? "<li>No favorites yet</li>"
-              : favoriteShots.map(id => {
-                  const s = shotsData.find(x => x.id === id);
-                  return `<li>${s ? s.name : id}</li>`;
-                }).join("")
-          }
-        </ul>
-      </div>
-
-      <!-- QUIZ HISTORY -->
-      <div class="card">
-        <h3>📝 Quiz History</h3>
-        <ul class="quiz-history">
-          ${
-            quizCount === 0
-              ? "<li>No quizzes taken yet</li>"
-              : user.quizScores.map(q => `
-                  <li>
-                    Score: <strong>${q.score}/${q.total}</strong>
-                    <span>${new Date(q.date).toLocaleString()}</span>
-                  </li>
-                `).join("")
-          }
-        </ul>
-      </div>
-
     </div>
   `;
+
+  // Draw charts AFTER HTML exists
+  drawQuizChart(user);
+  drawProgressChart(user);
+}
+
+
+
+let quizChartInstance = null;
+let progressChartInstance = null;
+
+function drawQuizChart(user) {
+  const ctx = document.getElementById("quizChart");
+
+  if (!ctx) return;
+
+  const labels = user.quizScores.map((q, i) => `Attempt ${i + 1}`);
+  const scores = user.quizScores.map(q => q.score);
+
+  if (quizChartInstance) quizChartInstance.destroy();
+
+  quizChartInstance = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels,
+      datasets: [
+        {
+          label: "Quiz Score",
+          data: scores,
+          borderWidth: 3,
+          tension: 0.3,
+          fill: false
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+}
+
+function drawProgressChart(user) {
+  const ctx = document.getElementById("progressChart");
+  if (!ctx) return;
+
+  const learned = Object.values(user.progress).filter(Boolean).length;
+  const remaining = shotsData.length - learned;
+
+  if (progressChartInstance) progressChartInstance.destroy();
+
+  progressChartInstance = new Chart(ctx, {
+    type: "doughnut",
+    data: {
+      labels: ["Learned", "Remaining"],
+      datasets: [
+        {
+          data: [learned, remaining],
+          borderWidth: 1
+        }
+      ]
+    },
+    options: {
+      responsive: true
+    }
+  });
 }
