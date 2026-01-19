@@ -236,6 +236,8 @@ document.querySelectorAll(".nav-btn").forEach(btn => {
     if (view === "story") renderStory();
     if (view === "quiz") startQuiz();
     if (view === "profile") renderProfile();
+    if (view === "roadmap") renderRoadmap();
+
 
 
     setActiveNav(btn);
@@ -430,6 +432,8 @@ let quizOrder = [];
 let currentQuizIndex = 0;
 let quizScore = 0;
 let quizFinished = false;
+let quizMistakes = [];
+
 
 const quizQuestion = document.getElementById("quizQuestion");
 const quizOptions = document.getElementById("quizOptions");
@@ -442,10 +446,14 @@ function startQuiz() {
   currentQuizIndex = 0;
   quizScore = 0;
   quizFinished = false;
+  quizMistakes = []; // ✅ RESET MISTAKES
+
   nextQuestionBtn.textContent = "Next Question";
   nextQuestionBtn.style.display = "none";
+
   showQuestion();
 }
+
 
 function showQuestion() {
   quizFeedback.textContent = "";
@@ -488,17 +496,24 @@ function checkAnswer(button, selected, correct) {
     button.classList.add("wrong");
     quizFeedback.textContent = `❌ Wrong! Correct answer: ${correct}`;
 
-    // Highlight correct one
+    // Highlight correct answer
     buttons.forEach(b => {
       if (b.textContent === correct) {
         b.classList.add("correct");
       }
+    });
+
+    // ✅ SAVE MISTAKE
+    quizMistakes.push({
+      question: quizOrder[currentQuizIndex].question,
+      correct: correct
     });
   }
 
   quizScoreBox.textContent = `Score: ${quizScore}`;
   nextQuestionBtn.style.display = "inline-block";
 }
+
 
 
 nextQuestionBtn.onclick = () => {
@@ -519,8 +534,10 @@ function showFinalScore() {
     user.quizScores.push({
       score: quizScore,
       total: quizOrder.length,
-      date: new Date().toISOString()
+      date: new Date().toISOString(),
+      mistakes: quizMistakes // ✅ STORE MISTAKES
     });
+    
     saveCurrentUserData(user);
     addXP(quizScore * 10);
     checkAchievements();
@@ -546,5 +563,52 @@ function getScoreMessage() {
   if (percent >= 40) return "📘 Not bad, but you should practice more!";
   return "🎾 Keep training and try again!";
 }
+
+/* ===============================
+   SMART COACH SYSTEM
+================================ */
+
+
+function getCoachRecommendationsPrioritized() {
+  const user = getCurrentUserData();
+  if (!user) return [];
+
+  const scores = [];
+
+  shotsData.forEach(shot => {
+    let score = 0;
+
+    // 1. If not learned → very important
+    if (!user.progress[shot.id]) score += 50;
+
+    // 2. If not favorite → medium importance
+    if (!user.favorites[shot.id]) score += 10;
+
+    // 3. If user often fails quizzes → very important
+    user.quizScores.slice(-5).forEach(q => {
+      if (q.mistakes) {
+        q.mistakes.forEach(m => {
+          if (m.question.toLowerCase().includes(shot.id)) {
+            score += 20;
+          }
+        });
+      }
+    });
+
+    if (score > 0) {
+      scores.push({
+        name: shot.name,
+        score
+      });
+    }
+  });
+
+  // Sort by most important
+  scores.sort((a, b) => b.score - a.score);
+
+  // Return TOP 3 only
+  return scores.slice(0, 3);
+}
+
 
 

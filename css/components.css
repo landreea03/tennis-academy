@@ -1031,3 +1031,77 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+/* ===============================
+   ROADMAP (DUOLINGO STYLE)
+================================ */
+.roadmap-path {
+  max-width: 700px;
+  margin: 2rem auto;
+}
+
+.roadmap-tier {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.roadmap-skills {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  align-items: center;
+}
+
+.roadmap-node {
+  width: 260px;
+  padding: 1rem;
+  border-radius: 20px;
+  background: #0f2e25;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.roadmap-node.completed {
+  background: linear-gradient(135deg, #0f5c45, #1fa27a);
+}
+
+.roadmap-node.available {
+  border: 2px solid var(--green-light);
+}
+
+.roadmap-node.locked {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.roadmap-node:hover:not(.locked) {
+  transform: scale(1.05);
+}
+
+.roadmap-icon {
+  font-size: 1.8rem;
+}
+
+.roadmap-title {
+  margin-top: 0.3rem;
+  font-weight: bold;
+}
+
+.coach-box {
+  border-left: 4px solid var(--green-light);
+  background: linear-gradient(135deg, #0b3d2e, #0f5c45);
+}
+.smart-coach-list {
+  list-style: none;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+.smart-coach-list li {
+  margin: 8px 0;
+}
+.priority.high { color: #ff6b6b; font-weight: bold; }
+.priority.medium { color: #ffd93d; }
+.priority.low { color: #7bed9f; }

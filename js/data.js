@@ -405,6 +405,21 @@ const shotsData = [
     }
   ];
   
+  const roadmapData = [
+    {
+      title: "Beginner",
+      skills: ["forehand"]
+    },
+    {
+      title: "Intermediate",
+      skills: [ "backhand","volley"]
+    },
+    {
+      title: "Advanced",
+      skills: ["serve", "slice"]
+    }
+  ];
+  
   
   
   

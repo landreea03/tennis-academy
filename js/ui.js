@@ -283,18 +283,66 @@ function renderHome() {
   if (!box) return;
 
   const user = getCurrentUserData();
+  if (!user) return;
+
   const learned = shotsData.filter(s => user.progress[s.id]).length;
   const total = shotsData.length;
   const percent = Math.round((learned / total) * 100);
 
-  box.innerHTML = `
-    <div class="card">
-      <h2>Your Progress</h2>
-      <p>You have learned <strong>${learned}</strong> out of <strong>${total}</strong> shots.</p>
-      <p>Progress: <strong>${percent}%</strong></p>
-    </div>
+  // Clear box first
+  box.innerHTML = "";
+
+  // ===== Progress Card =====
+  const progressCard = document.createElement("div");
+  progressCard.className = "card";
+  progressCard.innerHTML = `
+    <h2>Your Progress</h2>
+    <p>You have learned <strong>${learned}</strong> out of <strong>${total}</strong> shots.</p>
+    <p>Progress: <strong>${percent}%</strong></p>
   `;
+  box.appendChild(progressCard);
+
+  // ===== Smart Coach Card =====
+  const coachBox = document.createElement("div");
+  coachBox.className = "card";
+
+  const recs = getCoachRecommendationsPrioritized();
+
+  let coachHTML = "";
+
+  if (recs.length === 0) {
+    coachHTML = `<p>You're doing great! No weak areas detected 💪</p>`;
+  } else {
+    const listItems = recs.map(r => {
+      let label = "Low";
+      if (r.score >= 60) label = "High";
+      else if (r.score >= 30) label = "Medium";
+
+      return `
+        <li>
+          🎯 <strong>${r.name}</strong>
+          <span class="priority ${label.toLowerCase()}">(${label} priority)</span>
+        </li>
+      `;
+    }).join("");
+
+    coachHTML = `
+      <p>Today you should focus on:</p>
+      <ul class="smart-coach-list">
+        ${listItems}
+      </ul>
+    `;
+  }
+
+  coachBox.innerHTML = `
+    <h2>🎾 Smart Coach</h2>
+    ${coachHTML}
+  `;
+
+  box.appendChild(coachBox);
 }
+
+
 
 function renderProfile() {
   const container = document.getElementById("profile");
@@ -459,5 +507,79 @@ function drawProgressChart(user) {
     options: {
       responsive: true
     }
+  });
+}
+
+function renderRoadmap() {
+  const container = document.getElementById("roadmap");
+  const user = getCurrentUserData();
+
+  if (!user) return;
+
+  let html = `<h2>🗺️ Learning Roadmap</h2><div class="roadmap-path">`;
+
+  let previousTierCompleted = true;
+
+  roadmapData.forEach(tier => {
+    html += `<div class="roadmap-tier">
+      <h3>${tier.title}</h3>
+      <div class="roadmap-skills">`;
+
+    tier.skills.forEach(skillId => {
+      const shot = shotsData.find(s => s.id === skillId);
+      if (!shot) return;
+
+      const learned = user.progress[skillId];
+      const unlocked = previousTierCompleted;
+
+      let stateClass = "locked";
+      let icon = "🔒";
+
+      if (learned) {
+        stateClass = "completed";
+        icon = "✅";
+      } else if (unlocked) {
+        stateClass = "available";
+        icon = "🎯";
+      }
+
+      html += `
+        <div class="roadmap-node ${stateClass}" data-shot="${skillId}">
+          <div class="roadmap-icon">${icon}</div>
+          <div class="roadmap-title">${shot.name}</div>
+        </div>
+      `;
+    });
+
+    // Check if this tier is fully completed
+    const tierCompleted = tier.skills.every(id => user.progress[id]);
+    previousTierCompleted = tierCompleted;
+
+    html += `</div></div>`;
+  });
+
+  html += `</div>`;
+
+  container.innerHTML = html;
+
+  // Click handling
+  container.querySelectorAll(".roadmap-node").forEach(node => {
+    node.onclick = () => {
+      const shotId = node.dataset.shot;
+      const user = getCurrentUserData();
+
+      // If locked
+      if (node.classList.contains("locked")) {
+        alert("🔒 Complete previous skills first!");
+        return;
+      }
+
+      const shot = shotsData.find(s => s.id === shotId);
+      if (!shot) return;
+
+      showView("shots");
+      renderShotMenu();
+      renderShotDetails(shot);
+    };
   });
 }
