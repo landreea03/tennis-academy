@@ -1,17 +1,17 @@
 console.log("main.js loaded");
 
-/* ===============================
+/* 
    AUTH GUARD
-================================ */
+ */
 const USERS_KEY = "tennis_users";
 const CURRENT_USER_KEY = "tennis_current_user";
 
 if (!localStorage.getItem(CURRENT_USER_KEY)) {
   window.location.href = "login.html";
 }
-/* ===============================
+/* 
    LOGOUT BUTTON
-================================ */
+ */
 const logoutBtn = document.getElementById("logoutBtn");
 
 if (logoutBtn) {
@@ -21,9 +21,9 @@ if (logoutBtn) {
   };
 }
 
-/* ===============================
+/* 
    USER STORE HELPERS
-================================ */
+ */
 function loadUsers() {
   const raw = localStorage.getItem(USERS_KEY);
   return raw ? JSON.parse(raw) : {};
@@ -44,7 +44,7 @@ function getCurrentUserData() {
 
   if (!user) return null;
 
-  // Backward compatibility / auto-upgrade old users
+  
   if (!user.progress) user.progress = {};
   if (!user.favorites) user.favorites = {};
   if (!user.quizScores) user.quizScores = [];
@@ -78,9 +78,9 @@ function saveCurrentUserData(userData) {
   saveUsers(users);
 }
 
-/* ===============================
+/* 
    XP & LEVEL SYSTEM
-================================ */
+ */
 
 function addXP(amount) {
   const user = getCurrentUserData();
@@ -90,7 +90,7 @@ function addXP(amount) {
 
   const oldLevel = user.level;
 
-  // Level formula: every 100 XP = new level
+  
   user.level = Math.floor(user.xp / 100) + 1;
 
   if (user.level > oldLevel) {
@@ -113,9 +113,9 @@ function showLevelUpPopup(level) {
   setTimeout(() => popup.remove(), 3500);
 }
 
-/* ===============================
+/* 
    STREAK SYSTEM
-================================ */
+ */
 
 function updateStreak() {
   const user = getCurrentUserData();
@@ -142,9 +142,9 @@ function updateStreak() {
 }
 
 
-/* ===============================
+/* 
    ACHIEVEMENTS SYSTEM
-================================ */
+ */
 
 function checkAchievements() {
   const user = getCurrentUserData();
@@ -189,19 +189,19 @@ function showAchievementPopup(title) {
 
 
 
-/* ===============================
+/* 
    SHOT FILTER STATE
-================================ */
-let currentShotFilter = "all"; // all | favorites | learned
+ */
+let currentShotFilter = "all"; 
 
 function setShotFilter(filter) {
   currentShotFilter = filter;
   renderShotMenu();
 }
 
-/* ===============================
+/* 
    FAVORITES (PER USER)
-================================ */
+ */
 function toggleFavorite(shotId) {
   const user = getCurrentUserData();
   user.favorites[shotId] = !user.favorites[shotId];
@@ -210,9 +210,9 @@ function toggleFavorite(shotId) {
   checkAchievements();
 }
 
-/* ===============================
+/* 
    PROGRESS (PER USER)
-================================ */
+ */
 function toggleLearned(shotId) {
   const user = getCurrentUserData();
   user.progress[shotId] = !user.progress[shotId];
@@ -222,9 +222,9 @@ function toggleLearned(shotId) {
   checkAchievements(); 
 }
 
-/* ===============================
+/* 
    NAV BUTTONS
-================================ */
+ */
 document.querySelectorAll(".nav-btn").forEach(btn => {
   btn.addEventListener("click", () => {
     const view = btn.dataset.view;
@@ -244,9 +244,9 @@ document.querySelectorAll(".nav-btn").forEach(btn => {
   });
 });
 
-/* ===============================
+/* 
    LOGO → HOME
-================================ */
+*/
 const homeLogo = document.getElementById("homeLogo");
 if (homeLogo) {
   homeLogo.addEventListener("click", () => {
@@ -257,9 +257,9 @@ if (homeLogo) {
   });
 }
 
-/* ===============================
+/* 
    ACTIVE STATE
-================================ */
+*/
 function setActiveNav(activeBtn) {
   document.querySelectorAll(".nav-btn").forEach(btn => btn.classList.remove("active"));
   activeBtn.classList.add("active");
@@ -269,16 +269,16 @@ function clearActiveNav() {
   document.querySelectorAll(".nav-btn").forEach(btn => btn.classList.remove("active"));
 }
 
-/* ===============================
+/* 
    DEFAULT VIEW
-================================ */
+ */
 updateStreak();
 showView("home");
 renderHome();
 
-/* ===============================
+/* 
    LIGHTBOX
-================================ */
+ */
 document.addEventListener("click", e => {
   if (e.target.tagName === "IMG") {
     const overlay = document.createElement("div");
@@ -289,9 +289,9 @@ document.addEventListener("click", e => {
   }
 });
 
-/* ===============================
+/* 
    SEARCH
-================================ */
+ */
 const searchInput = document.getElementById("searchInput");
 const searchResults = document.getElementById("searchResults");
 
@@ -339,9 +339,9 @@ searchIndex.push({
   }
 });
 
-/* ===============================
+/* 
    SEARCH HANDLING
-================================ */
+ */
 searchInput.addEventListener("input", e => {
   const query = e.target.value.toLowerCase();
   searchResults.innerHTML = "";
@@ -375,9 +375,9 @@ function clearSearch() {
 }
 
 
-/* ===============================
+/* 
    HOME SHORTCUTS (LEARNING PATHS)
-================================ */
+ */
 document.addEventListener("click", e => {
 
   // START TRAINING
@@ -425,9 +425,9 @@ document.addEventListener("click", e => {
 });
 
 
-/* ===============================
+/* 
    QUIZ SYSTEM (PER USER)
-================================ */
+ */
 let quizOrder = [];
 let currentQuizIndex = 0;
 let quizScore = 0;
@@ -446,7 +446,7 @@ function startQuiz() {
   currentQuizIndex = 0;
   quizScore = 0;
   quizFinished = false;
-  quizMistakes = []; // ✅ RESET MISTAKES
+  quizMistakes = []; 
 
   nextQuestionBtn.textContent = "Next Question";
   nextQuestionBtn.style.display = "none";
@@ -527,7 +527,7 @@ nextQuestionBtn.onclick = () => {
 function showFinalScore() {
   quizFinished = true;
 
-  // ===== SAVE SCORE TO CURRENT USER =====
+  //  SAVE SCORE TO CURRENT USER 
   const user = getCurrentUserData();
 
   if (user) {
@@ -535,7 +535,7 @@ function showFinalScore() {
       score: quizScore,
       total: quizOrder.length,
       date: new Date().toISOString(),
-      mistakes: quizMistakes // ✅ STORE MISTAKES
+      mistakes: quizMistakes 
     });
     
     saveCurrentUserData(user);
@@ -564,9 +564,9 @@ function getScoreMessage() {
   return "🎾 Keep training and try again!";
 }
 
-/* ===============================
+/* 
    SMART COACH SYSTEM
-================================ */
+ */
 
 
 function getCoachRecommendationsPrioritized() {
@@ -578,13 +578,13 @@ function getCoachRecommendationsPrioritized() {
   shotsData.forEach(shot => {
     let score = 0;
 
-    // 1. If not learned → very important
+    // 1. If not learned -> very important
     if (!user.progress[shot.id]) score += 50;
 
-    // 2. If not favorite → medium importance
+    // 2. If not favorite -> medium importance
     if (!user.favorites[shot.id]) score += 10;
 
-    // 3. If user often fails quizzes → very important
+    // 3. If user often fails quizzes -> very important
     user.quizScores.slice(-5).forEach(q => {
       if (q.mistakes) {
         q.mistakes.forEach(m => {

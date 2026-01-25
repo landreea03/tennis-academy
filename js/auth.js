@@ -1,13 +1,13 @@
 
-/* ===============================
+/* 
    AUTH STORAGE KEYS
-================================ */
+ */
 const USERS_KEY = "tennis_users";
 const CURRENT_USER_KEY = "tennis_current_user";
 
-/* ===============================
+/* 
    STORAGE HELPERS
-================================ */
+ */
 function loadUsers() {
   const raw = localStorage.getItem(USERS_KEY);
   return raw ? JSON.parse(raw) : {};
@@ -21,9 +21,9 @@ function setCurrentUser(username) {
   localStorage.setItem(CURRENT_USER_KEY, username);
 }
 
-/* ===============================
+/* 
    REGISTER
-================================ */
+*/
 const registerBtn = document.getElementById("registerBtn");
 if (registerBtn) {
   registerBtn.addEventListener("click", () => {
@@ -72,9 +72,9 @@ if (registerBtn) {
   });
 }
 
-/* ===============================
+/* 
    LOGIN
-================================ */
+ */
 const loginBtn = document.getElementById("loginBtn");
 if (loginBtn) {
   loginBtn.addEventListener("click", () => {

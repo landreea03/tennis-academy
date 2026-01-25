@@ -2,18 +2,18 @@ const appViews = document.querySelectorAll(".view");
 const shotMenu = document.getElementById("shotMenu");
 const shotDisplay = document.getElementById("shotDisplay");
 
-/* ===============================
+/* 
    VIEW HANDLING
-================================ */
+ */
 function showView(id) {
   appViews.forEach(view => view.classList.add("hidden"));
   const target = document.getElementById(id);
   if (target) target.classList.remove("hidden");
 }
 
-/* ===============================
+/* 
    SHOTS
-================================ */
+ */
 function renderShotMenu() {
   const user = getCurrentUserData();
 
@@ -184,9 +184,9 @@ function renderTabContent(tab, shot) {
   }
 }
 
-/* ===============================
+/* 
    BENEFITS
-================================ */
+ */
 function renderBenefits() {
   const container = document.getElementById("benefits");
 
@@ -261,9 +261,9 @@ function renderBenefitColumn(title, items) {
   `;
 }
 
-/* ===============================
+/* 
    STORY
-================================ */
+ */
 function renderStory() {
   document.getElementById("story").innerHTML = `
     <h2>My Story</h2>
@@ -275,9 +275,9 @@ function renderStory() {
   `;
 }
 
-/* ===============================
+/* 
    HOME
-================================ */
+ */
 function renderHome() {
   const box = document.getElementById("homeProgressBox");
   if (!box) return;

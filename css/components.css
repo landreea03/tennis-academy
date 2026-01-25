@@ -1,7 +1,7 @@
 
- /* ===============================
+ /* 
    NAV BUTTONS
-================================ */
+  */
 .nav-btn {
   position: relative;
 }
@@ -26,9 +26,9 @@
   .nav-btn:hover {
     color: var(--green-light);
   }
-  /* ===============================
+  /* 
    LOGO
-================================ */
+ */
 .logo {
   position: relative;
   z-index:999;
@@ -41,9 +41,9 @@
   transform: scale(1.05);
 }
   
-  /* ===============================
+  /* 
      SHOT BUTTONS
-  ================================ */
+   */
   .shot-btn {
     padding: 0.6rem 1.2rem;
     border-radius: 20px;
@@ -60,9 +60,9 @@
     transform: scale(1.05);
   }
   
-  /* ===============================
+  /* 
      CARDS
-  ================================ */
+   */
   .card {
     background: var(--bg-card);
     padding: 1.5rem;
@@ -76,9 +76,9 @@
     margin-bottom: 1rem;
   }
   
-  /* ===============================
+  /* 
      ANIMATIONS
-  ================================ */
+   */
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -89,9 +89,9 @@
       transform: translateY(0);
     }
   }
-  /* ===============================
+  /*
    STORY SECTION
-================================ */
+  */
 .story-text {
     max-width: 900px;
     line-height: 1.7;
@@ -109,9 +109,9 @@
     width: 100%;
     border-radius: 12px;
   }
-  /* ===============================
+  /* 
    BENEFITS SECTION
-================================ */
+  */
 .benefits-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -145,9 +145,9 @@
       grid-template-columns: 1fr;
     }
   }
-  /* ===============================
+  /* 
    HOME / WELCOME – ADVANCED GALLERY
-================================ */
+  */
 .home-content {
     max-width: 1200px;
     margin: 4rem auto;
@@ -279,9 +279,9 @@
     border-left: 4px solid var(--green-light);
     font-style: italic;
   }
-/* ===============================
+/* 
    SEARCH
-================================ */
+ */
 .search-wrapper {
   position: relative;
 }
@@ -317,9 +317,9 @@
 .hidden {
   display: none;
 }
-/* ===============================
+/* 
    SHOT TABS
-================================ */
+ */
 .shot-tabs {
   display: flex;
   gap: 1rem;
@@ -350,9 +350,9 @@
   animation: fadeIn 0.3s ease;
 }
   
-/* ===============================
+/* 
    PROGRESS SYSTEM
-================================ */
+ */
 .learn-btn {
   margin: 1rem 0;
   padding: 0.6rem 1.2rem;
@@ -374,9 +374,9 @@
   font-size: 0.9rem;
   opacity: 0.9;
 }
-/* ===============================
+/* 
    FAVORITES
-================================ */
+ */
 .fav-btn {
   margin-left: 1rem;
   padding: 0.6rem 1.2rem;
@@ -393,9 +393,9 @@
   background: var(--green-light);
   color: #022c22;
 }
-/* ===============================
+/* 
    SHOT FILTERS
-================================ */
+ */
 .shot-filters {
   display: flex;
   gap: 0.6rem;
@@ -422,9 +422,9 @@
   background: var(--green-light);
   color: #022c22;
 }
-/* ===============================
+/* 
    HOME ADVANCED
-================================ */
+ */
 .home-hero {
   margin-top: 2rem;
 }
@@ -497,9 +497,9 @@
 .home-progress {
   margin-top: 4rem;
 }
-/* ===============================
+/* 
    HOME HERO SPLIT LAYOUT
-================================ */
+ */
 .home-hero {
   display: grid;
   grid-template-columns: 1fr 1.2fr 1fr;
@@ -513,7 +513,7 @@
   text-align: center;
 }
 
-/* Left & right image columns */
+/* Left , right image columns */
 .home-hero-images {
   display: grid;
   grid-template-rows: repeat(3, 1fr);
@@ -532,7 +532,7 @@
   transform: scale(1.04);
 }
 
-/* Make hero fit screen nicely */
+
 .home-content {
   margin-top: 2rem;
 }
@@ -548,9 +548,9 @@
     grid-template-rows: 1fr;
   }
 }
-/* ===============================
+/* 
    HOME PATH BUTTONS
-================================ */
+ */
 .path-card {
   background: linear-gradient(135deg, #0a3d2e, #0f5c45);
   border-radius: 20px;
@@ -603,9 +603,9 @@
   font-size: 2rem;
   margin-bottom: 0.5rem;
 }
- /* ===============================
+ /* 
    HOME PROGRESS BOX
-================================ */
+ */
 
 .home-progress {
   margin-top: 4rem;
@@ -637,9 +637,9 @@
   color: var(--green-light);
   margin-top: 1rem;
 }
-/* ===============================
+/* 
    REVEAL ANIMATIONS
-================================ */
+ */
 .reveal {
   opacity: 0;
   transform: translateY(30px);
@@ -693,9 +693,9 @@
 .home-btn:active {
   transform: scale(0.97);
 }
-/* ===============================
+/* 
    QUIZ
-================================ */
+ */
 
 .quiz-container {
   max-width: 700px;
@@ -739,9 +739,9 @@
   margin-top: 1.5rem;
   opacity: 0.8;
 }
-/* ===============================
+/*
    BENEFITS TABS
-================================ */
+ */
 
 .benefits-tabs {
   display: flex;
@@ -772,9 +772,9 @@
 .benefits-content {
   animation: fadeIn 0.4s ease;
 }
-/* ===============================
+/*
    BENEFITS LAYOUT
-================================ */
+ */
 
 .benefits-layout {
   display: grid;
@@ -805,9 +805,9 @@
     grid-template-columns: 1fr;
   }
 }
-/* ===============================
+/* 
    AUTH
-================================ */
+ */
 
 .auth-container {
   min-height: 100vh;
@@ -847,9 +847,9 @@
   color: #ff7b7b;
   font-size: 0.9rem;
 }
-/* ===============================
+/*
    QUIZ FEEDBACK
-================================ */
+ */
 #quizOptions button.correct {
   background: #2ecc71 !important;
   color: #022c22;
@@ -865,9 +865,9 @@
   cursor: not-allowed;
 }
 
-/* ===============================
+/* 
    ACHIEVEMENT POPUP
-================================ */
+ */
 .achievement-overlay {
   position: fixed;
   inset: 0;
@@ -917,9 +917,9 @@
   }
 }
  
-/* ===============================
+/*
    ACHIEVEMENTS GRID
-================================ */
+ */
 .achievements-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -937,9 +937,9 @@
 }
 
 
-/* ===============================
+/* 
    PROFILE DASHBOARD
-================================ */
+ */
 .profile-dashboard {
   display: grid;
   gap: 2rem;
@@ -1033,9 +1033,9 @@
 }
 
 
-/* ===============================
+/* 
    ROADMAP (DUOLINGO STYLE)
-================================ */
+ */
 .roadmap-path {
   max-width: 700px;
   margin: 2rem auto;

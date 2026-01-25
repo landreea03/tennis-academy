@@ -1,6 +1,6 @@
-/* ===============================
+/* 
    GLOBAL LAYOUT
-================================ */
+ */
 .view {
   padding: 2rem;
 }
@@ -9,9 +9,9 @@
   display: none;
 }
 
-/* ===============================
+/* 
    NAVBAR LAYOUT
-================================ */
+ */
 .navbar {
   position: relative;
   display: flex;
@@ -58,9 +58,9 @@
   outline: none;
 }
 
-/* ===============================
+/* 
    SHOTS LAYOUT
-================================ */
+ */
 .shot-menu {
   display: flex;
   flex-wrap: wrap;
@@ -74,9 +74,9 @@
   gap: 2rem;
 }
 
-/* ===============================
+/* 
    RESPONSIVE
-================================ */
+*/
 @media (max-width: 900px) {
   .navbar {
     flex-direction: column;
